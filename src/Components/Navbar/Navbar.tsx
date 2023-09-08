@@ -27,9 +27,7 @@ const Navbar: React.FC = () => {
     <div role="presentation" onClick={toggleDrawer} onKeyDown={toggleDrawer}>
       <List>
         <ListItem button>
-          <Link href="/">
-            <ListItemText primary="Home" />
-          </Link>
+          <Link href="/">Home</Link>
         </ListItem>
         <ListItem button>
           <Link href="/products">
@@ -58,9 +56,9 @@ const Navbar: React.FC = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Clothes Store
         </Typography>
-        <Link href="/login" color="inherit">
+        <Button href="/login" color="inherit">
           Log In
-        </Link>
+        </Button>
       </Toolbar>
       <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer}>
         {list()}
