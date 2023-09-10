@@ -5,19 +5,25 @@ import axios from "axios";
 import { urlCreateCategory } from "../../Config/endpoinst";
 import { AlertTitle } from "@mui/material";
 import { useState } from "react";
-import { createBrowserHistory } from "history";
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function CreateCategory() {
-  //const navigate = useNavigate();
-  let history = createBrowserHistory();
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   async function create(category: categoryCreationDTO) {
     try {
       var result = await axios.post(urlCreateCategory, category);
+      if (result.data && result.data.Message) {
+        // Set the success message from the response
+        setSuccessMessage(result.data.Message);
+      } else {
+        // Set a default success message if the response doesn't contain one
+        setSuccessMessage("Category created successfully!");
+      }
       console.log(result);
       setError(null);
-      history.push("./categories");
+      navigate("./categories", { state: { successMessage } });
     } catch (error: any) {
       if (error.response) {
         const errorResponse = error.response.data;

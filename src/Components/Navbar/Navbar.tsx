@@ -9,12 +9,10 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon,
-  Link,
   Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -27,15 +25,15 @@ const Navbar: React.FC = () => {
     <div role="presentation" onClick={toggleDrawer} onKeyDown={toggleDrawer}>
       <List>
         <ListItem button>
-          <Link href="/">Home</Link>
+          <Link to="/">Home</Link>
         </ListItem>
         <ListItem button>
-          <Link href="/products">
+          <Link to="/products">
             <ListItemText primary="Products" />
           </Link>
         </ListItem>
         <ListItem button>
-          <Link href="/categories">
+          <Link to="/categories">
             <ListItemText primary="Categories" />
           </Link>
         </ListItem>

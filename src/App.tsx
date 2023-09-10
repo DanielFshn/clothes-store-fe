@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router , Route, Routes } from "react-router-dom";
 import Footer from "./Components/Footer/Footer";
 import Navbar from "./Components/Navbar/Navbar";
 import routes from "./Config/route-config";
@@ -7,17 +7,15 @@ configureValidations();
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <Router>
         <Navbar />
-        <Switch>
+        <Routes>
           {routes.map((route) => (
-            <Route key={route.path} path={route.path} exact={route.exact}>
-              <route.component />
-            </Route>
+            <Route key={route.path} path={route.path} element={<route.component/>}/>
           ))}
-        </Switch>
+        </Routes>
         <Footer />
-      </BrowserRouter>
+      </Router>
     </>
   );
 }
