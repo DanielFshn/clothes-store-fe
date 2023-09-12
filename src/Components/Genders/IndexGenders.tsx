@@ -12,25 +12,26 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Grid, TablePagination } from "@mui/material";
 import axios, { AxiosResponse } from "axios";
-import { urlGetCategories } from "../../Config/endpoinst";
+import { urlGetCategories, urlGetGenders } from "../../Config/endpoinst";
 import { useNavigate } from "react-router-dom";
+import { Gender } from "./gender.model";
 
-interface Category {
-  name: string;
-  id: string;
-}
-
-export default function IndexCategories() {
+export default function IndexGenders() {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [categories, setCategories] = React.useState<Gender[]>([]);
 
-  const [categories, setCategories] = React.useState<Category[]>([]);
+
+    // State to control the delete confirmation dialog
+    const [isDeleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+    const [categoryToDelete, setCategoryToDelete] = React.useState<string | null>(null);
+
 
   React.useEffect(() => {
     axios
-      .get(`${urlGetCategories}`)
-      .then((response: AxiosResponse<Category[]>) => {
+      .get(`${urlGetGenders}`)
+      .then((response: AxiosResponse<Gender[]>) => {
         setCategories(response.data);
       });
   });
@@ -104,7 +105,7 @@ export default function IndexCategories() {
 
   function handleEditCategory(categoryId: string) {
     console.log(`Editing category with ID: ${categoryId}`);
-    navigate(`/category/edit/${categoryId}`);
+    navigate(`/gender/edit/${categoryId}`);
 
   }
 

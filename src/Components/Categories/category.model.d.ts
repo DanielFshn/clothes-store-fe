@@ -5,3 +5,7 @@ export interface categoryCreationDTO {
 export interface editCategoryDTO {
   name: string;
 }
+
+export interface categoryDTO {
+  name: string;
+}

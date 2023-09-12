@@ -5,3 +5,9 @@ export interface sizeCreationDTO {
 export interface sizeEditDTO {
   name: string;
 }
+
+
+export interface Size {
+  name: string;
+  id: string;
+}

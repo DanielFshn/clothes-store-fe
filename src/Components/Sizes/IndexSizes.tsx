@@ -6,31 +6,27 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Grid, TablePagination } from "@mui/material";
 import axios, { AxiosResponse } from "axios";
-import { urlGetCategories } from "../../Config/endpoinst";
+import { urlSizes } from "../../Config/endpoinst";
 import { useNavigate } from "react-router-dom";
+import { Size } from "./size.model";
 
-interface Category {
-  name: string;
-  id: string;
-}
 
-export default function IndexCategories() {
+export default function IndexSizes() {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [categories, setCategories] = React.useState<Size[]>([]);
 
   React.useEffect(() => {
     axios
-      .get(`${urlGetCategories}`)
-      .then((response: AxiosResponse<Category[]>) => {
+      .get(`${urlSizes}`)
+      .then((response: AxiosResponse<Size[]>) => {
         setCategories(response.data);
       });
   });
@@ -104,7 +100,7 @@ export default function IndexCategories() {
 
   function handleEditCategory(categoryId: string) {
     console.log(`Editing category with ID: ${categoryId}`);
-    navigate(`/category/edit/${categoryId}`);
+    navigate(`/size/edit/${categoryId}`);
 
   }
 
