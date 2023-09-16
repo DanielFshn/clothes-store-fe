@@ -1,6 +1,5 @@
 import IndexCategories from "../Components/Categories/IndexCategories";
 import IndexPage from "../Components/Home/IndexPage";
-import SignInSide from "../Components/Login/SingInSide";
 import EditProduct from "../Components/Products.tsx/EditProduct";
 import IndexProducts from "../Components/Products.tsx/IndexProducts";
 import RedirectToHomePage from "../Uitls/RedirectToHomePage";
@@ -12,6 +11,7 @@ import IndexGenders from "../Components/Genders/IndexGenders";
 import EditGender from "../Components/Genders/EditGender";
 import CreateGender from "../Components/Genders/CreateGender";
 import IndexSizes from "../Components/Sizes/IndexSizes";
+import Login from "../Auth/Login/Login";
 
 const routes = [
   //products
@@ -19,7 +19,7 @@ const routes = [
   { path: "/product/edit/:id", component: EditProduct },
 
   //categories
-  { path: "/categories", component: IndexCategories },
+  { path: "/categories", component: IndexCategories , isAdmin: true},
   { path: "/category/edit/:id", component: EditCategory },
   { path: "/category/create", component: CreateCategory },
 
@@ -34,7 +34,7 @@ const routes = [
   { path: "/gender/create", component: CreateGender },
 
   //login
-  { path: "/login", component: SignInSide },
+  { path: "/login", component: Login },
 
   //index
   { path: "/", component: IndexPage, exact: true },

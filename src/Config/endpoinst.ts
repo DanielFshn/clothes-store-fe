@@ -1,5 +1,8 @@
 const baseURL = "https://localhost:7001/api";
 
+//users
+export const urlLogin = `${baseURL}/identity/login-user`;
+
 //categories
 export const urlGetCategories = `${baseURL}/categories/get-categories`;
 export const urlCreateCategory = `${baseURL}/categories/insert-category`;
@@ -16,3 +19,4 @@ export const urlGetGenders = `${baseURL}/gender/get-genders`;
 export const urlEditGender = `${baseURL}/gender/update-gender`;
 export const urlCreateGender = `${baseURL}/gender/insert-gender`;
 export const urlGetGenderById = `${baseURL}/gender/get-gender-by-id`;
+

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import Authorize from "../../Auth/Authorize";
 
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -32,11 +33,18 @@ const Navbar: React.FC = () => {
             <ListItemText primary="Products" />
           </Link>
         </ListItem>
-        <ListItem button>
-          <Link to="/categories">
-            <ListItemText primary="Categories" />
-          </Link>
-        </ListItem>
+        <Authorize
+          role="admin"
+          authorized={
+            <>
+              <ListItem button>
+                <Link to="/categories">
+                  <ListItemText primary="Categories" />
+                </Link>
+              </ListItem>
+            </>
+          }
+        />
       </List>
     </div>
   );
@@ -52,11 +60,17 @@ const Navbar: React.FC = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Clothes Store
+          <Link to={"/"}>
+            <ListItemText>Clothes Store</ListItemText>
+          </Link>
         </Typography>
-        <Button href="/login" color="inherit">
-          Log In
-        </Button>
+        <List>
+          <ListItem button>
+            <Link to="/login">
+              <ListItemText primary="Log In" />
+            </Link>
+          </ListItem>
+        </List>
       </Toolbar>
       <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer}>
         {list()}
