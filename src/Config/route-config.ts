@@ -12,6 +12,7 @@ import EditGender from "../Components/Genders/EditGender";
 import CreateGender from "../Components/Genders/CreateGender";
 import IndexSizes from "../Components/Sizes/IndexSizes";
 import Login from "../Auth/Login/Login";
+import Register from "../Auth/Register/Register";
 
 const routes = [
   //products
@@ -36,6 +37,8 @@ const routes = [
   //login
   { path: "/login", component: Login },
 
+  //register
+  { path: "/register", component: Register },
   //index
   { path: "/", component: IndexPage, exact: true },
   { path: "*", component: RedirectToHomePage },

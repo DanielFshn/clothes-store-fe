@@ -8,10 +8,7 @@ import { claim } from "./Auth/auth.models";
 import AuthenticationContext from "./Auth/AuthenticationContext";
 configureValidations();
 function App() {
-  const [claims, setClaims] = useState<claim[]>([
-    { name: "email", value: "daniel@yahoo.com" },
-    { name: "role", value: "User" },
-  ]);
+  const [claims, setClaims] = useState<claim[]>([]);
   function isAdmin() {
     return (
       claims.findIndex(
@@ -41,6 +38,8 @@ function App() {
           </Routes>
         </AuthenticationContext.Provider>
       </Router>
+      <Footer/>
+
     </>
   );
 }

@@ -2,7 +2,7 @@ const baseURL = "https://localhost:7001/api";
 
 //users
 export const urlLogin = `${baseURL}/identity/login-user`;
-
+export const urlRegister = `${baseURL}/identity/register-user`;
 //categories
 export const urlGetCategories = `${baseURL}/categories/get-categories`;
 export const urlCreateCategory = `${baseURL}/categories/insert-category`;

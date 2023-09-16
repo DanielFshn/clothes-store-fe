@@ -1,23 +1,31 @@
-import { useState } from "react";
-import { authenticationResponse, loginCredencials } from "../auth.models";
+import { useContext, useState } from "react";
+import {
+  authenticationResponse,
+  authenticationTokenResponse,
+  loginCredencials,
+} from "../auth.models";
 import axios from "axios";
 import { Alert, AlertTitle } from "@mui/material";
 import SingInSide from "./SingInSide";
-import { urlCreateCategory, urlLogin } from "../../Config/endpoinst";
-import { string } from "yup";
+import { urlLogin } from "../../Config/endpoinst";
 import { useNavigate } from "react-router-dom";
+import { getClaims, saveToken } from "../handleJWT";
+import AuthenticationContext from "../AuthenticationContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const { update } = useContext(AuthenticationContext);
+
   async function loginUser(userCred: loginCredencials) {
     try {
       var response = await axios.post<authenticationResponse>(
         urlLogin,
         userCred
       );
-      console.log(response.data);
+      saveToken(response.data.token);
+      update(getClaims());
       setError(null);
       if (response.data.token === null) {
         setError("Incorrect Login!");

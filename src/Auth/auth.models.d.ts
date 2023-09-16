@@ -12,3 +12,15 @@ export interface authenticationResponse {
   isSuccesful: string;
   token: string;
 }
+
+export interface authenticationTokenResponse {
+  token: string;
+}
+
+export interface singUpRequest {
+  userName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  repeatPassword: string;
+}

@@ -6,7 +6,7 @@ export default function IndexPage() {
     <div>
       <Authorize
         authorized={<>You are authorize</>}
-        notAuthorized={<>You are not authorize</>}
+        notAuthorized={<>You are not Admin</>}
         role="Admin"
       ></Authorize>
       <br />

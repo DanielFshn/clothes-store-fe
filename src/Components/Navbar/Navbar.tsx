@@ -1,5 +1,5 @@
 // Navbar.tsx
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -14,6 +14,8 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import Authorize from "../../Auth/Authorize";
+import { logout } from "../../Auth/handleJWT";
+import AuthenticationContext from "../../Auth/AuthenticationContext";
 
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -21,6 +23,10 @@ const Navbar: React.FC = () => {
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
+  const { update, claims } = useContext(AuthenticationContext);
+  function getUsername(): string {
+    return claims.filter((x) => x.name === "unique_name")[0]?.value;
+  }
 
   const list = () => (
     <div role="presentation" onClick={toggleDrawer} onKeyDown={toggleDrawer}>
@@ -64,13 +70,36 @@ const Navbar: React.FC = () => {
             <ListItemText>Clothes Store</ListItemText>
           </Link>
         </Typography>
-        <List>
-          <ListItem button>
-            <Link to="/login">
-              <ListItemText primary="Log In" />
-            </Link>
-          </ListItem>
-        </List>
+        <Authorize
+          notAuthorized={
+            <List>
+              <ListItem button>
+                <Link to="/login">
+                  <ListItemText primary="Log In" />
+                </Link>
+              </ListItem>
+              <ListItem button>
+                <Link to="/register">
+                  <ListItemText primary="Sing Up" />
+                </Link>
+              </ListItem>
+            </List>
+          }
+          authorized={
+            <>
+              <span>Hellow {getUsername()}</span>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  logout();
+                  update([]);
+                }}
+              >
+                Log Out
+              </Button>
+            </>
+          }
+        ></Authorize>
       </Toolbar>
       <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer}>
         {list()}
