@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import Authorize from "../../Auth/Authorize";
 import { logout } from "../../Auth/handleJWT";
 import AuthenticationContext from "../../Auth/AuthenticationContext";
-
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -25,7 +24,6 @@ const Navbar: React.FC = () => {
   };
   const { update, claims } = useContext(AuthenticationContext);
 
-
   function getUsername(): string {
     return claims.filter((x) => x.name === "unique_name")[0]?.value;
   }
@@ -33,22 +31,18 @@ const Navbar: React.FC = () => {
   const list = () => (
     <div role="presentation" onClick={toggleDrawer} onKeyDown={toggleDrawer}>
       <List>
-        <ListItem button>
-          <Link to="/">Home</Link>
+        <ListItem button component={Link} to="/">
+          <ListItemText primary="Home" />
         </ListItem>
-        <ListItem button>
-          <Link to="/products">
-            <ListItemText primary="Products" />
-          </Link>
+        <ListItem button component={Link} to="/products">
+          <ListItemText primary="Products" />
         </ListItem>
         <Authorize
           role="Admin"
           authorized={
             <>
-              <ListItem button>
-                <Link to="/categories">
-                  <ListItemText primary="Categories" />
-                </Link>
+              <ListItem button component={Link} to="/categories">
+                <ListItemText primary="Categories" />
               </ListItem>
             </>
           }
@@ -57,7 +51,7 @@ const Navbar: React.FC = () => {
     </div>
   );
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" sx={{ padding: 0, margin: 0 }}>
       <Toolbar>
         <IconButton
           edge="start"
@@ -68,26 +62,22 @@ const Navbar: React.FC = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Link to={"/"}>
+        <ListItem button component={Link} to="/">
             <ListItemText>Clothes Store</ListItemText>
-          </Link>
+          </ListItem>
         </Typography>
         <Authorize
           notAuthorized={
             <>
               <List>
-                <ListItem button>
-                  <Link to="/login">
-                    <ListItemText primary="Log In"  />
-                  </Link>
+                <ListItem button component={Link} to="/login">
+                  <ListItemText primary="Log In" />
                 </ListItem>
               </List>
 
               <List>
-                <ListItem button>
-                  <Link to="/register">
-                    <ListItemText primary="Sing Up" />
-                  </Link>
+                <ListItem button component={Link} to="/register">
+                  <ListItemText primary="Sing Up" />
                 </ListItem>
               </List>
             </>
@@ -96,6 +86,7 @@ const Navbar: React.FC = () => {
             <>
               <span>Hellow {getUsername()}</span>
               <Button
+              LinkComponent={Link}
                 variant="contained"
                 onClick={() => {
                   logout();
