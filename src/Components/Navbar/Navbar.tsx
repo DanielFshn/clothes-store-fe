@@ -24,6 +24,8 @@ const Navbar: React.FC = () => {
     setOpenDrawer(!openDrawer);
   };
   const { update, claims } = useContext(AuthenticationContext);
+
+
   function getUsername(): string {
     return claims.filter((x) => x.name === "unique_name")[0]?.value;
   }
@@ -40,7 +42,7 @@ const Navbar: React.FC = () => {
           </Link>
         </ListItem>
         <Authorize
-          role="admin"
+          role="Admin"
           authorized={
             <>
               <ListItem button>
@@ -72,18 +74,23 @@ const Navbar: React.FC = () => {
         </Typography>
         <Authorize
           notAuthorized={
-            <List>
-              <ListItem button>
-                <Link to="/login">
-                  <ListItemText primary="Log In" />
-                </Link>
-              </ListItem>
-              <ListItem button>
-                <Link to="/register">
-                  <ListItemText primary="Sing Up" />
-                </Link>
-              </ListItem>
-            </List>
+            <>
+              <List>
+                <ListItem button>
+                  <Link to="/login">
+                    <ListItemText primary="Log In"  />
+                  </Link>
+                </ListItem>
+              </List>
+
+              <List>
+                <ListItem button>
+                  <Link to="/register">
+                    <ListItemText primary="Sing Up" />
+                  </Link>
+                </ListItem>
+              </List>
+            </>
           }
           authorized={
             <>

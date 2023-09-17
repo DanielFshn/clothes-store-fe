@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -24,16 +24,25 @@ export default function IndexCategories() {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
   const [categories, setCategories] = React.useState<Category[]>([]);
+  const test = 10;
+  const fetchCastegories = async () => {
+    try {
+      const response = await axios.get(`${urlGetCategories}`, {
+        params: { Page : page , RecordsPerPage: rowsPerPage }, // Pass pagination parameters
+      });
+      setCategories(response.data);
+    } catch (error) {
+      // Handle error
+      console.error("Error fetching categories:", error);
+    }
+  };
 
   React.useEffect(() => {
-    axios
-      .get(`${urlGetCategories}`)
-      .then((response: AxiosResponse<Category[]>) => {
-        setCategories(response.data);
-      });
-  });
+    fetchCastegories();
+  },[page,rowsPerPage]);
+
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -47,8 +56,8 @@ export default function IndexCategories() {
 
   return (
     <div>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={10} md={8}>
           <Paper sx={{ width: "100%", overflow: "auto", marginTop: 2 }}>
@@ -88,9 +97,9 @@ export default function IndexCategories() {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[5,10, 25, 100]}
               component="div"
-              count={categories.length}
+              count={11}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -105,7 +114,6 @@ export default function IndexCategories() {
   function handleEditCategory(categoryId: string) {
     console.log(`Editing category with ID: ${categoryId}`);
     navigate(`/category/edit/${categoryId}`);
-
   }
 
   function handleDeleteCategory(categoryId: string) {
