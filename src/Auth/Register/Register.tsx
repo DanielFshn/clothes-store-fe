@@ -31,9 +31,11 @@ export default function Register() {
         const errorMessage = `${errorResponse.detail}`;
         const initialErrorsArray = errorMessage.split(", ");
         setError(initialErrorsArray);
-        setSnackbarOpen(true); // Open the Snackbar
-        setSuccessMessage(null);
+      }else{
+        setError(["An error occurred. Please try again later."]);
       }
+      setSnackbarOpen(true); // Open the Snackbar
+        setSuccessMessage(null);
     }
   }
 

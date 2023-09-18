@@ -6,6 +6,7 @@ import configureValidations from "./Config/Validations";
 import { useState } from "react";
 import { claim } from "./Auth/auth.models";
 import AuthenticationContext from "./Auth/AuthenticationContext";
+import './Uitls/App.css';
 configureValidations();
 function App() {
   const [claims, setClaims] = useState<claim[]>([]);

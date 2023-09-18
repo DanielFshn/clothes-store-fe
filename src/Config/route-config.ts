@@ -1,7 +1,7 @@
 import IndexCategories from "../Components/Categories/IndexCategories";
 import IndexPage from "../Components/Home/IndexPage";
-import EditProduct from "../Components/Products.tsx/EditProduct";
-import IndexProducts from "../Components/Products.tsx/IndexProducts";
+import EditProduct from "../Components/Products/EditProduct";
+import IndexProducts from "../Components/Products/IndexProducts";
 import RedirectToHomePage from "../Uitls/RedirectToHomePage";
 import CreateCategory from "../Components/Categories/CreateCategory";
 import EditCategory from "../Components/Categories/EditCategory";
@@ -13,7 +13,7 @@ import CreateGender from "../Components/Genders/CreateGender";
 import IndexSizes from "../Components/Sizes/IndexSizes";
 import Login from "../Auth/Login/Login";
 import Register from "../Auth/Register/Register";
-
+import Page404 from "../Components/Errors/Page404";
 const routes = [
   //products
   { path: "/products", component: IndexProducts },
@@ -39,6 +39,10 @@ const routes = [
 
   //register
   { path: "/register", component: Register },
+
+  //errors
+  { path: "/pageNotFound", component: Page404 },
+
   //index
   { path: "/", component: IndexPage, exact: true },
   { path: "*", component: RedirectToHomePage },

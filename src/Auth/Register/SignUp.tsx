@@ -62,9 +62,10 @@ export default function SignUp(props: registerFormProps) {
               onSubmit={props.onSubmit}
               validationSchema={Yup.object({
                 userName: Yup.string().required("This field is required!"),
-                email: Yup.string().required("This field is required!"),
+                email: Yup.string().required("This field is required!").email('Invalid email address'),
                 password: Yup.string().required("This field is required!"),
                 repeatPassword: Yup.string().required("This field is required!"),
+                phoneNumber : Yup.string().required("This field is required!")
               })}
             >
               {(formikProps) => (
@@ -85,12 +86,14 @@ export default function SignUp(props: registerFormProps) {
                     <TextFieldComponent
                       field="password"
                       displayField="Password"
+                      type="password"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextFieldComponent
                       field="repeatPassword"
                       displayField="Repeat Password"
+                      type="password"
                     />
                   </Grid>
                   <Grid item xs={12}>

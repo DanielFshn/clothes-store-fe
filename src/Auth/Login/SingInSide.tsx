@@ -94,6 +94,7 @@ export default function SignInSide(props: loginFormProps) {
                     <TextFieldComponent
                       field="password"
                       displayField="Password"
+                      type="password"
                     />
 
                     <FormControlLabel

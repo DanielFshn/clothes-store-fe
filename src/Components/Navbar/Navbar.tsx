@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 import Authorize from "../../Auth/Authorize";
 import { logout } from "../../Auth/handleJWT";
 import AuthenticationContext from "../../Auth/AuthenticationContext";
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -51,7 +53,7 @@ const Navbar: React.FC = () => {
     </div>
   );
   return (
-    <AppBar position="sticky" sx={{ padding: 0, margin: 0 }}>
+    <AppBar position="sticky">
       <Toolbar>
         <IconButton
           edge="start"

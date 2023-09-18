@@ -13,6 +13,7 @@ export default function TextFieldComponent(props: textFieldProps) {
         as={TextField}
         label={props.displayField}
         fullWidth
+        type={props.type || "text"} // Use the type prop to specify the input type
         required
         error={meta.touched && !!meta.error}
         helperText={meta.touched && meta.error ? meta.error : " "}
@@ -28,4 +29,5 @@ interface textFieldProps {
   field: string;
   displayField: string;
   error?: string;
+  type? : "text" | "password";
 }
