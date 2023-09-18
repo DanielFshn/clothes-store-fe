@@ -7,6 +7,7 @@ import { useState } from "react";
 import { claim } from "./Auth/auth.models";
 import AuthenticationContext from "./Auth/AuthenticationContext";
 import './Uitls/App.css';
+import AppFooter from "./Components/Home/AppFooter";
 configureValidations();
 function App() {
   const [claims, setClaims] = useState<claim[]>([]);
@@ -39,7 +40,7 @@ function App() {
           </Routes>
         </AuthenticationContext.Provider>
       </Router>
-      <Footer/>
+      <AppFooter/>
 
     </>
   );

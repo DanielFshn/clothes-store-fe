@@ -16,23 +16,6 @@ import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import TextFieldComponent from "../../Components/HelperComponents/TextFieldComponent";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -48,6 +31,10 @@ export default function SignUp(props: registerFormProps) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: "rgba(255, 255, 255, 0.8)", // Set the background color with transparency
+            padding: "20px", // Add padding for spacing
+            borderRadius: "8px", // Add border-radius for rounded corners
+                        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add a box shadow
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -125,7 +112,6 @@ export default function SignUp(props: registerFormProps) {
             </Formik>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
