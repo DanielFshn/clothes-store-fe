@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,10 +10,22 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Grid, TablePagination } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  Snackbar,
+  TablePagination,
+} from "@mui/material";
 import axios, { AxiosResponse } from "axios";
-import { urlGetCategories } from "../../Config/endpoinst";
+import { urlDeleteCategory, urlGetCategories } from "../../Config/endpoinst";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../Uitls/LoadSpinner";
 
 interface Category {
   name: string;
@@ -26,10 +38,28 @@ export default function IndexCategories() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [categories, setCategories] = React.useState<Category[]>([]);
   const test = 10;
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false); // State for Snackbar
+  const [error, setError] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true); // State to track loading
+
+  //confirm dialog box
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
+
+  function openDeleteDialog(categoryId: string) {
+    setCategoryToDelete(categoryId);
+    setDeleteDialogOpen(true);
+  }
+  function closeDeleteDialog() {
+    setCategoryToDelete(null);
+    setDeleteDialogOpen(false);
+  }
+
   const fetchCastegories = async () => {
     try {
       const response = await axios.get(`${urlGetCategories}`, {
-        params: { Page : page , RecordsPerPage: rowsPerPage }, // Pass pagination parameters
+        params: { Page: page, RecordsPerPage: rowsPerPage }, // Pass pagination parameters
       });
       setCategories(response.data);
     } catch (error) {
@@ -40,8 +70,7 @@ export default function IndexCategories() {
 
   React.useEffect(() => {
     fetchCastegories();
-  },[page,rowsPerPage]);
-
+  }, [page, rowsPerPage]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -53,9 +82,17 @@ export default function IndexCategories() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  useEffect(() => {
+    // Simulate an asynchronous operation (e.g., loading data) with a timeout
+    setTimeout(() => {
+      setLoading(false); // Set loading to false when done loading
+    }, 1000); // Adjust the timeout as needed
+  }, []);
 
   return (
     <div>
+      {loading ? ( // Render the LoadingSpinner when loading is true
+    <LoadingSpinner /> )  : (null)};
       <br />
       <br />
       <Grid container justifyContent="center">
@@ -97,7 +134,7 @@ export default function IndexCategories() {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[5,10, 25, 100]}
+              rowsPerPageOptions={[5, 10, 25, 100]}
               component="div"
               count={11}
               rowsPerPage={rowsPerPage}
@@ -108,6 +145,67 @@ export default function IndexCategories() {
           </Paper>
         </Grid>
       </Grid>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={closeDeleteDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Delete Category</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this category?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteDialog} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              // Add your delete logic here
+              try {
+                 axios
+                   .put(`${urlDeleteCategory}?CategoryId=${categoryToDelete}`)
+                   .then((response) => {
+                    setSuccessMessage("Category is deleted succesfully");
+                    closeDeleteDialog();
+                    setError([]);   
+                       setSnackbarOpen(true);
+                       fetchCastegories();
+                   });     
+              } catch (error: any) {
+                if (error.response) {
+                  const errorResponse = error.response.data;
+                  const errorMessage = `${errorResponse.detail}`;
+                  const initialErrorsArray = errorMessage.split(", ");
+                  setError(initialErrorsArray);
+                } else {
+                  setError(["An error occurred. Please try again later."]);
+                }
+                setSnackbarOpen(true); // Open the Snackbar
+                setSuccessMessage(null);
+              }
+            }}
+            color="secondary"
+            autoFocus
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={error.length > 0 ? "error" : "success"}
+        >
+          {successMessage === null ? "An error occurred!" : successMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 
@@ -117,6 +215,7 @@ export default function IndexCategories() {
   }
 
   function handleDeleteCategory(categoryId: string) {
-    console.log(`Deleting category with ID: ${categoryId}`);
+    openDeleteDialog(categoryId);
   }
+  
 }

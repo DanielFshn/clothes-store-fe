@@ -23,7 +23,7 @@ export default function EditSize() {
   async function edit(sizeToEdit: sizeEditDTO) {
     try {
       await axios.put(`${urlEditSize}/${id}`, sizeToEdit);
-      navigate(`/categories`);
+      navigate(`/sizes`);
 
       //navigate("/categories");
     } catch (error: any) {

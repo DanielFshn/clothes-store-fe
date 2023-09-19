@@ -43,15 +43,28 @@ const Navbar: React.FC = () => {
           role="Admin"
           authorized={
             <>
+            <List>
               <ListItem button component={Link} to="/categories">
                 <ListItemText primary="Categories" />
               </ListItem>
+
+              <ListItem button component={Link} to="/sizes">
+                <ListItemText primary="Sizes" />
+              </ListItem>
+
+              
+              <ListItem button component={Link} to="/genders">
+                <ListItemText primary="Genders" />
+              </ListItem>
+              </List>
             </>
           }
         />
       </List>
     </div>
   );
+  const [loading, setLoading] = useState(true); // State to track loading
+
   return (
     <AppBar position="sticky">
       <Toolbar>
