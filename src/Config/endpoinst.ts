@@ -23,3 +23,13 @@ export const urlEditGender = `${baseURL}/gender/update-gender`;
 export const urlCreateGender = `${baseURL}/gender/insert-gender`;
 export const urlGetGenderById = `${baseURL}/gender/get-gender-by-id`;
 export const urlDeleteGender  = `${baseURL}/gender/delete-gender`;
+
+//products
+export const urlProducts = `${baseURL}/Product/get-all-products`;
+export const urlCreateProduct = `${baseURL}/Product/create-product`;
+export const urlEditProduct = `${baseURL}/Product/update-product`;
+export const urlDeleteProduct = `${baseURL}/Product/delete-product`;
+
+//product ratings
+export const urlCreateProductRating = `${baseURL}/product-ratings/create-rating-product`;
+export const urlUpdateProductRating = `${baseURL}/product-ratings/product-rating-edit`;

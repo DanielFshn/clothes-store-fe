@@ -49,10 +49,10 @@ export default function SignUp(props: registerFormProps) {
               onSubmit={props.onSubmit}
               validationSchema={Yup.object({
                 userName: Yup.string().required("This field is required!"),
-                email: Yup.string().required("This field is required!").email('Invalid email address'),
+                email: Yup.string().required("This field is required!").email('Invalid email address!'),
                 password: Yup.string().required("This field is required!"),
                 repeatPassword: Yup.string().required("This field is required!"),
-                phoneNumber : Yup.string().required("This field is required!")
+                phoneNumber : Yup.string().matches(/^[0-9]+$/, 'Phone number must contain only digits!').required("This field is required!")
               })}
             >
               {(formikProps) => (
@@ -102,7 +102,7 @@ export default function SignUp(props: registerFormProps) {
                   </Button>
                   <Grid container justifyContent="flex-end">
                     <Grid item>
-                      <Link href="#" variant="body2">
+                      <Link href="/login" variant="body2">
                         Already have an account? Sign in
                       </Link>
                     </Grid>

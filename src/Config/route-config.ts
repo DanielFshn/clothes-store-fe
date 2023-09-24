@@ -14,10 +14,14 @@ import IndexSizes from "../Components/Sizes/IndexSizes";
 import Login from "../Auth/Login/Login";
 import Register from "../Auth/Register/Register";
 import Page404 from "../Components/Errors/Page404";
+import CreateProduct from "../Components/Products/CreateProduct";
+import ProductDetails from "../Components/Products/ProductDetails";
 const routes = [
   //products
   { path: "/products", component: IndexProducts },
   { path: "/product/edit/:id", component: EditProduct },
+  { path: "/product/create", component: CreateProduct },
+  { path: "/product/details", component: ProductDetails },
 
   //categories
   { path: "/categories", component: IndexCategories , isAdmin: true},

@@ -69,7 +69,7 @@ export default function IndexSizes() {
 
   return (
     <div>
-         {loading ? ( // Render the LoadingSpinner when loading is true
+     {loading ? ( // Render the LoadingSpinner when loading is true
     <LoadingSpinner /> )  : (null)};
       <br/>
       <br/>

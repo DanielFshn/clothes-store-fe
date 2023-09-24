@@ -26,6 +26,7 @@ import axios, { AxiosResponse } from "axios";
 import { urlDeleteCategory, urlGetCategories } from "../../Config/endpoinst";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../Uitls/LoadSpinner";
+import { compose } from "@mui/system";
 
 interface Category {
   name: string;
@@ -37,12 +38,11 @@ export default function IndexCategories() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [categories, setCategories] = React.useState<Category[]>([]);
-  const test = 10;
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false); // State for Snackbar
   const [error, setError] = useState<string[]>([]);
   const [loading, setLoading] = useState(true); // State to track loading
-
+  const [totalRecords, setTotalRecords] = useState(0);
   //confirm dialog box
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
@@ -61,7 +61,8 @@ export default function IndexCategories() {
       const response = await axios.get(`${urlGetCategories}`, {
         params: { Page: page, RecordsPerPage: rowsPerPage }, // Pass pagination parameters
       });
-      setCategories(response.data);
+      setCategories(response.data.data);
+      setTotalRecords(response.data.totalRecords);
     } catch (error) {
       // Handle error
       console.error("Error fetching categories:", error);
@@ -92,7 +93,9 @@ export default function IndexCategories() {
   return (
     <div>
       {loading ? ( // Render the LoadingSpinner when loading is true
-    <LoadingSpinner /> )  : (null)};
+        <LoadingSpinner />
+      ) : null}
+      ;
       <br />
       <br />
       <Grid container justifyContent="center">
@@ -134,9 +137,9 @@ export default function IndexCategories() {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 100]}
+              rowsPerPageOptions={[1,5, 10, 25, 100]}
               component="div"
-              count={11}
+              count={totalRecords}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -165,15 +168,15 @@ export default function IndexCategories() {
             onClick={() => {
               // Add your delete logic here
               try {
-                 axios
-                   .put(`${urlDeleteCategory}?CategoryId=${categoryToDelete}`)
-                   .then((response) => {
+                axios
+                  .put(`${urlDeleteCategory}?CategoryId=${categoryToDelete}`)
+                  .then((response) => {
                     setSuccessMessage("Category is deleted succesfully");
                     closeDeleteDialog();
-                    setError([]);   
-                       setSnackbarOpen(true);
-                       fetchCastegories();
-                   });     
+                    setError([]);
+                    setSnackbarOpen(true);
+                    fetchCastegories();
+                  });
               } catch (error: any) {
                 if (error.response) {
                   const errorResponse = error.response.data;
@@ -217,5 +220,4 @@ export default function IndexCategories() {
   function handleDeleteCategory(categoryId: string) {
     openDeleteDialog(categoryId);
   }
-  
 }

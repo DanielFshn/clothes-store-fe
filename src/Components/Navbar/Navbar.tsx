@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import Authorize from "../../Auth/Authorize";
 import { logout } from "../../Auth/handleJWT";
 import AuthenticationContext from "../../Auth/AuthenticationContext";
-import LocalMallIcon from '@mui/icons-material/LocalMall';
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -43,19 +43,18 @@ const Navbar: React.FC = () => {
           role="Admin"
           authorized={
             <>
-            <List>
-              <ListItem button component={Link} to="/categories">
-                <ListItemText primary="Categories" />
-              </ListItem>
+              <List>
+                <ListItem button component={Link} to="/categories">
+                  <ListItemText primary="Categories" />
+                </ListItem>
 
-              <ListItem button component={Link} to="/sizes">
-                <ListItemText primary="Sizes" />
-              </ListItem>
+                <ListItem button component={Link} to="/sizes">
+                  <ListItemText primary="Sizes" />
+                </ListItem>
 
-              
-              <ListItem button component={Link} to="/genders">
-                <ListItemText primary="Genders" />
-              </ListItem>
+                <ListItem button component={Link} to="/genders">
+                  <ListItemText primary="Genders" />
+                </ListItem>
               </List>
             </>
           }
@@ -77,7 +76,7 @@ const Navbar: React.FC = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        <ListItem button component={Link} to="/">
+          <ListItem button component={Link} to="/">
             <ListItemText>Clothes Store</ListItemText>
           </ListItem>
         </Typography>
@@ -100,16 +99,18 @@ const Navbar: React.FC = () => {
           authorized={
             <>
               <span>Hellow {getUsername()}</span>
-              <Button
-              LinkComponent={Link}
-                variant="contained"
-                onClick={() => {
-                  logout();
-                  update([]);
-                }}
-              >
-                Log Out
-              </Button>
+              <Link to={"/"}>
+                <Button
+                  LinkComponent={Link}
+                  variant="contained"
+                  onClick={() => {
+                    logout();
+                    update([]);
+                  }}
+                >
+                  Log Out
+                </Button>
+              </Link>
             </>
           }
         ></Authorize>
