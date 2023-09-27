@@ -7,6 +7,9 @@ interface Item {
   name: string;
   description: string;
   imageUrl: string;
+  categoryName: string;
+  genderName: string;
+  sizeName: string;
   ratingNumber: number;
 }
 
@@ -26,6 +29,9 @@ const ItemList: React.FC<ItemListProps> = ({ items }) => {
             description: item.description,
             price: item.price,
             imageUrl: item.imageUrl,
+            categoryName : item.categoryName,
+            genderName : item.genderName,
+            sizeName: item.sizeName,
             ratingNumber : item.ratingNumber
           }}
         />

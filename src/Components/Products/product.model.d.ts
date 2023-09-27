@@ -32,6 +32,9 @@ export interface Product {
   description: string;
   imageUrl: string;
   price: number;
+  categoryName: string;
+  genderName: string;
+  sizeName: string;
   ratingNumber : number;
 }
 

@@ -15,6 +15,7 @@ import {
   urlCreateProductRating,
   urlUpdateProductRating,
 } from "../../../Config/endpoinst";
+import Authorize from "../../../Auth/Authorize";
 
 export default function ProductCard(props: ProductCardProps) {
   const [claims, setClaims] = useState<claim[]>([]);
@@ -133,6 +134,9 @@ export default function ProductCard(props: ProductCardProps) {
             <Button size="small">Details</Button>
           </Link>
         </CardActions>
+        <Authorize
+          role="Admin"
+          authorized={
         <CardActions>
           <Button
             size="small"
@@ -151,6 +155,8 @@ export default function ProductCard(props: ProductCardProps) {
             Edit
           </Button>
         </CardActions>
+        }
+        />
       </Card>
       <Snackbar
         open={snackbarOpen}
