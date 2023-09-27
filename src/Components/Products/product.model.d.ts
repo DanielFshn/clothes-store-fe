@@ -1,13 +1,30 @@
 export interface productCreationDTO {
   name: string;
   description: string;
-  price: decimal;
-  quantity: int;
+  price: number;
+  quantity: number;
   imageUrl: string;
-  categoryId: string;
-  sizeId: string;
-  genderId: string;
+  category: CategoryOption; // CategoryOption represents the selected category
+  gender: GenderOption; // GenderOption represents the selected gende
+  size: SizeOption; // SizeOption represents the selected size
 }
+
+
+export interface SizeOption {
+  id: string;
+  name: string;
+}
+
+export interface CategoryOption {
+  id: string;
+  name: string;
+}
+
+export interface GenderOption {
+  id: string;
+  name: string;
+}
+
 
 export interface Product {
   id: string;

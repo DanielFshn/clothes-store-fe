@@ -1,11 +1,19 @@
-import React from "react";
-import { productCreationDTO } from "./product.model";
+import React, { useEffect, useState } from "react";
+import { CategoryOption, GenderOption, SizeOption, productCreationDTO } from "./product.model";
 import { Form, Formik, FormikHelpers } from "formik";
-import { Box, Button, Grid, Paper } from "@mui/material";
+import { Box, Button, Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
 import TextFieldComponent from "../HelperComponents/TextFieldComponent";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 export default function ProductForm(props: productFormProps) {
+  const [selectedSize, setSelectedSize] = useState<SizeOption | undefined>(props.model.size);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryOption | undefined>(props.model.category);
+  const [selectedGender, setSelectedGender] = useState<GenderOption | undefined>(props.model.gender);
+  useEffect(() => {
+    setSelectedSize(props.model.size);
+    setSelectedCategory(props.model.category);
+    setSelectedGender(props.model.gender);
+  }, [props.model]);
   return (
     <div>
       <Grid container>
@@ -29,9 +37,24 @@ export default function ProductForm(props: productFormProps) {
                     quantity: Yup.number().required("Quantity is required!"),
 
                   imageUrl: Yup.mixed().required("Image is required"),
-                  categoryId: Yup.string().required("Category is required"),
-                  genderId: Yup.string().required("Gender is required"),
-                  sizeId: Yup.string().required("Size is required"),
+                  category: Yup.object()
+                  .shape({
+                    id: Yup.string().notOneOf([""], "Please select a Category"),
+                    name: Yup.string().notOneOf([""], "Please select a Category"),
+                  })
+                  .required("Category is required"),
+                  gender:Yup.object()
+                  .shape({
+                    id: Yup.string().notOneOf([""], "Please select a Gender"),
+                    name: Yup.string().notOneOf([""], "Please select a Gender"),
+                  })
+                  .required("Gender is required"),
+                  size: Yup.object()
+                  .shape({
+                    id: Yup.string().notOneOf([""], "Please select a Size"),
+                    name: Yup.string().notOneOf([""], "Please select a Size"),
+                  })
+                  .required("Size is required"),
                 })}
               >
                 {(formikProps) => (
@@ -50,15 +73,75 @@ export default function ProductForm(props: productFormProps) {
                       field="quantity"
                       displayField="Quantity"
                     />
-                    <TextFieldComponent field="sizeId" displayField="Size" />
-                    <TextFieldComponent
-                      field="genderId"
-                      displayField="Gender"
-                    />
-                    <TextFieldComponent
-                      field="categoryId"
-                      displayField="Category ID"
-                    />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div style={{ width: "30%", marginRight: "16px" }}>
+                            {/* Size Dropdown */}
+                            <Typography variant="subtitle1" gutterBottom>
+                    Size
+                  </Typography>
+              <Select
+                label="Size"
+                name="size"
+                value={selectedSize ? selectedSize.id : ""}
+                onChange={(e) => {
+                  const selectedOption = props.sizes.find((option) => option.id === e.target.value);
+                  setSelectedSize(selectedOption);
+                  formikProps.setFieldValue("size", selectedOption);
+                }}
+              >
+                {props.sizes.map((size) => (
+                  <MenuItem key={size.id} value={size.id}>
+                    {size.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              </div>
+              <div style={{ width: "30%", marginRight: "16px" }}>
+              {/* Gender Dropdown */}
+              <Typography variant="subtitle1" gutterBottom>
+                    Gender
+                  </Typography>
+              <Select
+                label="Gender"
+                name="gender"
+                value={selectedGender ? selectedGender.id : ""}
+                onChange={(e) => {
+                  const selectedOption = props.genders.find((option) => option.id === e.target.value);
+                  setSelectedGender(selectedOption);
+                  formikProps.setFieldValue("gender", selectedOption);
+                }}
+              >
+                {props.genders.map((gender) => (
+                  <MenuItem key={gender.id} value={gender.id}>
+                    {gender.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              </div>
+              <div style={{ width: "30%" }}>
+              {/* Category Dropdown */}
+              <Typography variant="subtitle1" gutterBottom>
+                    Category
+                  </Typography>
+              <Select
+                label="Category"
+                name="category"
+                value={selectedCategory ? selectedCategory.id :  ""}
+                onChange={(e) => {
+                  const selectedOption = props.categories.find((option) => option.id === e.target.value);
+                  setSelectedCategory(selectedOption);
+                  formikProps.setFieldValue("category", selectedOption);
+                }}
+              >
+                {props.categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              </div>
+              </div>
+
                     <input
                       type="file"
                       name="imageFile"
@@ -73,6 +156,8 @@ export default function ProductForm(props: productFormProps) {
 
                     <br />
                     <br />
+
+                    
                     <Grid container spacing={2}>
                       <Grid item xs={4}>
                         <Button
@@ -107,4 +192,7 @@ interface productFormProps {
     values: productCreationDTO,
     action: FormikHelpers<productCreationDTO>
   ): void;
+  sizes: SizeOption[]; 
+  categories: CategoryOption[]; 
+  genders: GenderOption[]; 
 }

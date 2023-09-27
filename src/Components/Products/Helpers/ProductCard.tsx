@@ -82,6 +82,8 @@ export default function ProductCard(props: ProductCardProps) {
       }
     } else {
       setError(["Log In First!"]);
+      setSnackbarOpen(true);
+
     }
   };
   // async function CreateRating(prd: ProductRatingCreation) {
@@ -95,7 +97,7 @@ export default function ProductCard(props: ProductCardProps) {
 
   return (
     <div style={{ margin: "10px", flex: "0 0 calc(25% - 20px)" }}>
-      {error.length > 0 && ( // Conditional rendering of error message
+      {error.length > 0 && ( // Conditional rendering of error message MUND TE KOMENTOHET DHE TE PERDORET VETEM SNACKABR
         <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
           {error}
@@ -159,7 +161,7 @@ export default function ProductCard(props: ProductCardProps) {
           onClose={() => setSnackbarOpen(false)}
           severity={error.length > 0 ? "error" : "success"}
         >
-          {successMessage === null ? "An error occurred!" : successMessage}
+          {successMessage === null ? error.join(',') : successMessage}
         </Alert>
       </Snackbar>
     </div>
