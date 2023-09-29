@@ -8,6 +8,7 @@ const backgroundImage =
   "https://cdn.shopify.com/s/files/1/0066/2595/1817/files/Website_Banner_June_2022.png?v=1667549061&width=2400";
 
 export default function ProductHero() {
+
   return (
     <ProductHeroLayout
       sxBackground={{
@@ -45,7 +46,7 @@ export default function ProductHero() {
         </Button>
       </Link>
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
-        Discover the experience
+        Discover Categories
       </Typography>
     </ProductHeroLayout>
   );

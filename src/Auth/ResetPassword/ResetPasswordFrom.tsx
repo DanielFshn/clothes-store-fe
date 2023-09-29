@@ -11,11 +11,12 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { loginCredencials } from "../auth.models";
+import { changePassCredencials } from "../auth.models";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import TextFieldComponent from "../../Components/HelperComponents/TextFieldComponent";
 import { Link } from "react-router-dom";
+import PasswordIcon from '@mui/icons-material/Password';
 function Copyright(props: any) {
   return (
     <Typography
@@ -37,7 +38,7 @@ function Copyright(props: any) {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignInSide(props: loginFormProps) {
+export default function ResetPasswordFrom(props: resetPasswordFormProps) {
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -71,36 +72,39 @@ export default function SignInSide(props: loginFormProps) {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
+              <PasswordIcon  />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Change Password
             </Typography>
-            
               <Formik
                 initialValues={props.model}
                 onSubmit={props.onSubmit}
                 validationSchema={Yup.object({
-                  username: Yup.string().required("This field is required!"),
-                  password: Yup.string().required("This field is required!"),
+                  //id: Yup.string().required("This field is required!"),
+                  currentPassword: Yup.string().required("This field is required!"),
+                  newPassword: Yup.string().required("This field is required!"),
+                  repeatPassword: Yup.string().required("This field is required!"),
                 })}
               >
                 {(formikProps) => (
                   <Form>
                     <TextFieldComponent
-                      field="username"
-                      displayField="Username"
-                    />
-                    <TextFieldComponent
-                      field="password"
-                      displayField="Password"
+                      field="currentPassword"
+                      displayField="Current Password"
                       type="password"
                     />
-
-                    <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Remember me"
+                    <TextFieldComponent
+                      field="newPassword"
+                      displayField="New Password"
+                      type="password"
                     />
+                    <TextFieldComponent
+                      field="repeatPassword"
+                      displayField="Repeat Passowrd"
+                      type="password"
+                    />
+             
                     <Button
                       type="submit"
                       fullWidth
@@ -110,18 +114,6 @@ export default function SignInSide(props: loginFormProps) {
                     >
                       Sign In
                     </Button>
-                    <Grid container>
-                      <Grid item xs>
-                        <Link to={"#"} >
-                          Forgot password?
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link to={'../register'} >
-                          {"Don't have an account? Sign Up"}
-                        </Link>
-                      </Grid>
-                    </Grid>
                   </Form>
                 )}
               </Formik>
@@ -132,10 +124,10 @@ export default function SignInSide(props: loginFormProps) {
   );
 }
 
-interface loginFormProps {
-  model: loginCredencials;
+interface resetPasswordFormProps {
+  model: changePassCredencials;
   onSubmit(
-    values: loginCredencials,
-    actions: FormikHelpers<loginCredencials>
+    values: changePassCredencials,
+    actions: FormikHelpers<changePassCredencials>
   ): void;
 }

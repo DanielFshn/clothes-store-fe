@@ -16,6 +16,7 @@ import Register from "../Auth/Register/Register";
 import Page404 from "../Components/Errors/Page404";
 import CreateProduct from "../Components/Products/CreateProduct";
 import ProductDetails from "../Components/Products/ProductDetails";
+import ResetPassowrd from "../Auth/ResetPassword/ResetPassword";
 const routes = [
   //products
   { path: "/products", component: IndexProducts },
@@ -43,6 +44,9 @@ const routes = [
 
   //register
   { path: "/register", component: Register },
+
+  //change password
+  {path: '/changePassword', component: ResetPassowrd},
 
   //errors
   { path: "/pageNotFound", component: Page404 },

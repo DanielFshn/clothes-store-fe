@@ -1,37 +1,31 @@
-import { useContext, useState } from "react";
-import {
-  authenticationResponse,
-  authenticationTokenResponse,
-  loginCredencials,
-} from "../auth.models";
+import { useState } from "react";
+import { changePassCredencials, changePasswordResponse } from "../auth.models";
 import axios from "axios";
 import { Alert, AlertTitle, Snackbar } from "@mui/material";
-import SingInSide from "./SingInSide";
-import { urlLogin } from "../../Config/endpoinst";
+import { urlChangePassword } from "../../Config/endpoinst";
 import { useNavigate } from "react-router-dom";
-import { getClaims, saveToken } from "../handleJWT";
-import AuthenticationContext from "../AuthenticationContext";
+import ResetPasswordFrom from "./ResetPasswordFrom";
+import { getClaims } from "../handleJWT";
 
-export default function Login() {
+export default function ResetPassowrd() {
   const navigate = useNavigate();
   const [error, setError] = useState<string[]>([]);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const { update } = useContext(AuthenticationContext);
-  const [snackbarOpen, setSnackbarOpen] = useState(false); // State for Snackbar
-
-  async function loginUser(userCred: loginCredencials) {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  async function loginUser(userCred: changePassCredencials) {
     try {
-      var response = await axios.post<authenticationResponse>(
-        urlLogin,
+        const claims = getClaims();
+        const userIdClaim = claims.find((claim) => claim.name === "nameid");
+        const userId = userIdClaim?.value || "";
+      var response = await axios.post<changePasswordResponse>(
+        `${urlChangePassword}?id=${userId}`,
         userCred
       );
-      saveToken(response.data.token);
-      update(getClaims());
       setError([]);
-      if (response.data.token === null) {
-        setError(["Incorrect Login!"]);
+      if (response.data.Message === 'false') {
+        setError(["An error accured!"]);
       } else {
-        navigate("/", { state: { successMessage } });
+        navigate("../login");
       }
     } catch (error: any) {
       if (error.response) {
@@ -39,11 +33,9 @@ export default function Login() {
         const errorMessage = `${errorResponse.detail}`;
         const initialErrorsArray = errorMessage.split(", ");
         setError(initialErrorsArray);
-      }else{
-        setError(["Username or passowrd is wrong!"]);
       }
       setSnackbarOpen(true); // Open the Snackbar
-        setSuccessMessage(null);
+      setSuccessMessage(null);
     }
   }
 
@@ -66,15 +58,20 @@ export default function Login() {
           onClose={() => setSnackbarOpen(false)}
           severity={error.length > 0 ? "error" : "success"}
         >
-          {successMessage ===  null ? "An error occurred!" : successMessage}
+          {successMessage === null ? "An error occurred!" : successMessage}
         </Alert>
       </Snackbar>
-      <SingInSide
-        model={{ username: "", password: "" }}
+      <ResetPasswordFrom
+        model={{
+          id: "",
+          currentPassword: "",
+          newPassword: "",
+          repeatPassword: "",
+        }}
         onSubmit={async (value) => {
           await loginUser(value);
         }}
-      ></SingInSide>
+      ></ResetPasswordFrom>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, Typography } from "@mui/material";
+import { Button, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import ProductCard from "./Helpers/ProductCard";
 import ItemList from "./Helpers/ItemList";
@@ -32,6 +32,10 @@ export default function IndexProducts() {
   const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
   const [genreOptions, setGenreOptions] = useState<GenderOption[]>([]);
   const [sizeOptions, setSizeOptions] = useState<SizeOption[]>([]);
+  const [dataTimestamp, setDataTimestamp] = useState(Date.now());
+  const updateDataTimestamp = () => {
+    setDataTimestamp(Date.now());
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,7 +49,7 @@ export default function IndexProducts() {
           filterQuery = `&Category=${selectedCategory}`;
         }
         if (selectedGenre !== "" && selectedGenre !== undefined) {
-          filterQuery = `&Size=${selectedGenre}`;
+          filterQuery = `&Gender=${selectedGenre}`;
         }
         if (selectedSize !== "" && selectedSize !== undefined) {
           filterQuery = `&Size=${selectedSize}`;
@@ -69,7 +73,7 @@ export default function IndexProducts() {
     };
 
     fetchData();
-  }, [selectedCategory, selectedGenre, selectedSize]);
+  }, [selectedCategory, selectedGenre, selectedSize,dataTimestamp]);
 
   const filterProducts = () => {
     let filteredProducts = products;
@@ -192,7 +196,7 @@ export default function IndexProducts() {
           />
           <br />
           <br />
-          <ItemList items={filteredProducts}></ItemList>
+          <ItemList items={filteredProducts} updateDataTimestamp={updateDataTimestamp} ></ItemList>
         </div>
       )}
       ;

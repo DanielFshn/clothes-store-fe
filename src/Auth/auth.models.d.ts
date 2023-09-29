@@ -8,6 +8,13 @@ export interface loginCredencials {
   password: string;
 }
 
+export interface changePassCredencials {
+  id: string;
+  currentPassword: string;
+  newPassword: string;
+  repeatPassword: string;
+}
+
 export interface authenticationResponse {
   isSuccesful: string;
   token: string;
@@ -15,6 +22,10 @@ export interface authenticationResponse {
 
 export interface authenticationTokenResponse {
   token: string;
+}
+
+export interface changePasswordResponse {
+  Message: string;
 }
 
 export interface singUpRequest {

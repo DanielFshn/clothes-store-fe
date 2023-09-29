@@ -119,7 +119,7 @@ export default function IndexGenders() {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[1,10, 25, 100]}
               component="div"
               count={categories.length}
               rowsPerPage={rowsPerPage}
@@ -153,7 +153,7 @@ export default function IndexGenders() {
                  axios
                    .put(`${urlDeleteGender}?GednerId=${categoryToDelete}`)
                    .then((response) => {
-                    setSuccessMessage("Category is deleted succesfully");
+                    setSuccessMessage("Gender is deleted succesfully");
                     closeDeleteDialog();
                     setError([]);   
                        setSnackbarOpen(true);

@@ -23,7 +23,7 @@ export default function EditGender() {
   async function edit(genderToEdit: editGenderDTO) {
     try {
       await axios.put(`${urlEditGender}/${id}`, genderToEdit);
-      navigate(`/categories`);
+      navigate(`/genders`);
 
       //navigate("/categories");
     } catch (error: any) {

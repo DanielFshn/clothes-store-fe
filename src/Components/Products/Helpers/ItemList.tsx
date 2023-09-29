@@ -15,6 +15,7 @@ interface Item {
 
 interface ItemListProps {
   items: Product[];
+  updateDataTimestamp : () =>  void;
 }
 
 const ItemList: React.FC<ItemListProps> = ({ items }) => {
@@ -34,6 +35,7 @@ const ItemList: React.FC<ItemListProps> = ({ items }) => {
             sizeName: item.sizeName,
             ratingNumber : item.ratingNumber
           }}
+          updateDataTimestamp={() =>{Date.now()}}
         />
       ))}
     </div>

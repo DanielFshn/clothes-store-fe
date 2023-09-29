@@ -12,12 +12,11 @@ import {
   Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Authorize from "../../Auth/Authorize";
 import { logout } from "../../Auth/handleJWT";
 import AuthenticationContext from "../../Auth/AuthenticationContext";
-import LocalMallIcon from "@mui/icons-material/LocalMall";
-
+import LogoutIcon from '@mui/icons-material/Logout';
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -29,7 +28,7 @@ const Navbar: React.FC = () => {
   function getUsername(): string {
     return claims.filter((x) => x.name === "unique_name")[0]?.value;
   }
-
+  const navigate = useNavigate();
   const list = () => (
     <div role="presentation" onClick={toggleDrawer} onKeyDown={toggleDrawer}>
       <List>
@@ -39,6 +38,7 @@ const Navbar: React.FC = () => {
         <ListItem button component={Link} to="/products">
           <ListItemText primary="Products" />
         </ListItem>
+
         <Authorize
           role="Admin"
           authorized={
@@ -98,19 +98,24 @@ const Navbar: React.FC = () => {
           }
           authorized={
             <>
-              <span>Hellow {getUsername()}</span>
+              <span>Hello {getUsername()} &nbsp;&nbsp;&nbsp;</span>
               <Link to={"/"}>
                 <Button
                   LinkComponent={Link}
+                  startIcon={<LogoutIcon />}
                   variant="contained"
                   onClick={() => {
                     logout();
                     update([]);
                   }}
                 >
-                  Log Out
+                  Log Out 
                 </Button>
-              </Link>
+              </Link>&nbsp;&nbsp;&nbsp;
+                <Button variant="contained" LinkComponent={Link} onClick={() => {
+                        navigate("/changePassword");
+                }}>Change Password
+                </Button>
             </>
           }
         ></Authorize>

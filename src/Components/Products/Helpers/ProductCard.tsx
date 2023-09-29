@@ -13,17 +13,37 @@ import { claim } from "../../../Auth/auth.models";
 import axios from "axios";
 import {
   urlCreateProductRating,
+  urlDeleteProduct,
   urlUpdateProductRating,
 } from "../../../Config/endpoinst";
 import Authorize from "../../../Auth/Authorize";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 export default function ProductCard(props: ProductCardProps) {
   const [claims, setClaims] = useState<claim[]>([]);
   const [error, setError] = useState<string[]>([]);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false); // State for Snackbar
-  const navigate = useNavigate();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [productIdToDelete, setProductIdToDelete] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+  const handleOpenDeleteDialog = (productId: string) => {
+    setProductIdToDelete(productId)
+    setDeleteDialogOpen(true);
+  };
+  const handleCloseDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+  };
+  const handleDeleteConfirmed = async () => {
+    const response = await axios.put(`${urlDeleteProduct}?ProductId=${productIdToDelete}`);
+    setError([]);
+      setSuccessMessage(response.data.Message);
+      setSnackbarOpen(true);
+    handleCloseDeleteDialog();
+    handleCloseDeleteDialog(); 
+    props.updateDataTimestamp();
+  };
   const handleDelete = (productId: string) => {};
 
   const handleEdit = (productId: string) => {};
@@ -136,13 +156,13 @@ export default function ProductCard(props: ProductCardProps) {
         </CardActions>
         <Authorize
           role="Admin"
-          authorized={
+          authorized={<>
         <CardActions>
           <Button
             size="small"
             variant="outlined"
             color="error"
-            onClick={() => handleDelete(props.product.id)}
+            onClick={() => handleOpenDeleteDialog(props.product.id)}
           >
             Delete
           </Button>
@@ -154,7 +174,30 @@ export default function ProductCard(props: ProductCardProps) {
           >
             Edit
           </Button>
+
         </CardActions>
+        <Dialog
+        open={deleteDialogOpen}
+        onClose={handleCloseDeleteDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete Product?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this product?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirmed} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      </>
         }
         />
       </Card>
@@ -175,4 +218,5 @@ export default function ProductCard(props: ProductCardProps) {
 }
 interface ProductCardProps {
   product: Product;
+  updateDataTimestamp : () => void;
 }
