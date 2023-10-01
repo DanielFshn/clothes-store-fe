@@ -17,6 +17,8 @@ import Page404 from "../Components/Errors/Page404";
 import CreateProduct from "../Components/Products/CreateProduct";
 import ProductDetails from "../Components/Products/ProductDetails";
 import ResetPassowrd from "../Auth/ResetPassword/ResetPassword";
+import ForgotPassowrd from "../Auth/EmailSender/ForgotPassword";
+import ResetPasswordWithToken from "../Auth/ConfirmResetPassword/ResetPasswordWithToken";
 const routes = [
   //products
   { path: "/products", component: IndexProducts },
@@ -48,8 +50,14 @@ const routes = [
   //change password
   {path: '/changePassword', component: ResetPassowrd},
 
+  //resetPass
+  {path: '/resetPassword' , component: ResetPasswordWithToken},
+
   //errors
   { path: "/pageNotFound", component: Page404 },
+
+  //send email for forgot password
+  {path: "/sendEmail", component: ForgotPassowrd},
 
   //index
   { path: "/", component: IndexPage, exact: true },

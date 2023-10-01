@@ -2,16 +2,13 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { loginCredencials } from "../auth.models";
+import { ConfirmForgotPassword } from "../auth.models";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import TextFieldComponent from "../../Components/HelperComponents/TextFieldComponent";
@@ -37,8 +34,18 @@ function Copyright(props: any) {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignInSide(props: loginFormProps) {
-
+export default function ResetPasswordWithTokenForm(props: sendResetEmail) {
+    const queryParams = new URLSearchParams(document.location.search);
+  
+    const initialEmail = queryParams.get('email') || '';
+    const initialToken = queryParams.get('token') || '';
+  
+    React.useEffect(() => {
+        var test = initialToken.replace(/\+/g, ' ').trim();
+     props.model.email = initialEmail;
+     props.model.token = initialToken.replace(/\+/g, ' ').trim(); // Replace '+' with space
+        }, [initialEmail, initialToken, props]);
+  
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -74,33 +81,32 @@ export default function SignInSide(props: loginFormProps) {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Reset Password
             </Typography>
             
               <Formik
                 initialValues={props.model}
                 onSubmit={props.onSubmit}
                 validationSchema={Yup.object({
-                  username: Yup.string().required("This field is required!"),
-                  password: Yup.string().required("This field is required!"),
+                  email: Yup.string().email("Invalid email address").required("This field is required!"),
+                  token: Yup.string().required("This field is required!"),
+                  newPassword: Yup.string().required("This field is required!"),
+                  repeatNewPass: Yup.string().required("This field is required!"),
                 })}
               >
                 {(formikProps) => (
                   <Form>
                     <TextFieldComponent
-                      field="username"
-                      displayField="Username"
-                    />
-                    <TextFieldComponent
-                      field="password"
-                      displayField="Password"
+                      field="newPassword"
+                      displayField="New Password"
                       type="password"
                     />
-
-                    <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Remember me"
+                    <TextFieldComponent
+                      field="repeatNewPass"
+                      displayField="Repeat Passowrd"
+                      type="password"
                     />
+                    
                     <Button
                       type="submit"
                       fullWidth
@@ -108,20 +114,8 @@ export default function SignInSide(props: loginFormProps) {
                       disabled={formikProps.isSubmitting}
                       sx={{ mt: 3, mb: 2 }}
                     >
-                      Sign In
+                      Submit
                     </Button>
-                    <Grid container>
-                      <Grid item xs>
-                        <Link to={"/sendEmail"} >
-                          Forgot password?
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link to={'../register'} >
-                          {"Don't have an account? Sign Up"}
-                        </Link>
-                      </Grid>
-                    </Grid>
                   </Form>
                 )}
               </Formik>
@@ -132,10 +126,10 @@ export default function SignInSide(props: loginFormProps) {
   );
 }
 
-interface loginFormProps {
-  model: loginCredencials;
+interface sendResetEmail {
+  model: ConfirmForgotPassword;
   onSubmit(
-    values: loginCredencials,
-    actions: FormikHelpers<loginCredencials>
+    values: ConfirmForgotPassword,
+    actions: FormikHelpers<ConfirmForgotPassword>
   ): void;
 }

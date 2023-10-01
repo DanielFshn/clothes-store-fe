@@ -150,8 +150,16 @@ export default function IndexProducts() {
               value={selectedCategory}
               onChange={(event) => setSelectedCategory(event.target.value)}
               placeholder="Category"
+              sx={{
+                minWidth: '200px', // Set the minimum width
+                backgroundColor: 'white', // Set the background color
+                borderRadius: '8px', // Set border radius
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.05)', // Change background color on hover
+                },
+              }}
             >
-              <MenuItem value="">All Categories</MenuItem>
+              <MenuItem value="" >All Categories</MenuItem>
               {categoryOptions.map((category) => (
                 <MenuItem key={category.id} value={category.name}>
                   {category.name}
@@ -162,6 +170,14 @@ export default function IndexProducts() {
               value={selectedGenre}
               onChange={(event) => setSelectedGenre(event.target.value)}
               placeholder="Genre"
+              sx={{
+                minWidth: '200px', // Set the minimum width
+                backgroundColor: 'white', // Set the background color
+                borderRadius: '8px', // Set border radius
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.05)', // Change background color on hover
+                },
+              }}
             >
               <MenuItem value="">All Genres</MenuItem>
               {genreOptions.map((genre) => (
@@ -174,6 +190,14 @@ export default function IndexProducts() {
               value={selectedSize}
               onChange={(event) => setSelectedSize(event.target.value)}
               placeholder="Size"
+              sx={{
+                minWidth: '200px', // Set the minimum width
+                backgroundColor: 'white', // Set the background color
+                borderRadius: '8px', // Set border radius
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.05)', // Change background color on hover
+                },
+              }}
             >
               <MenuItem value="">All Sizes</MenuItem>
               {sizeOptions.map((size) => (

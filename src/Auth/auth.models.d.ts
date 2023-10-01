@@ -35,3 +35,21 @@ export interface singUpRequest {
   password: string;
   repeatPassword: string;
 }
+
+export interface forgotPasswordRequest{
+  email:string;
+}
+
+export interface EmailSendResponse{
+  To: string;
+  Subject: string;
+  Body: string;
+  Message:string;
+}
+
+export interface ConfirmForgotPassword{
+  email: string;
+  token: string;
+  newPassword:string;
+  repeatNewPass: string;
+}

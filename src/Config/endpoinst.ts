@@ -4,6 +4,9 @@ const baseURL = "https://localhost:7001/api";
 export const urlLogin = `${baseURL}/identity/login-user`;
 export const urlRegister = `${baseURL}/identity/register-user`;
 export const urlChangePassword = `${baseURL}/identity/change-password`;
+export const urlSendResetEmail = `${baseURL}/identity/forgot-password`;
+export const urlResetPassword = `${baseURL}/identity/reset-password`;
+
 //categories
 export const urlGetCategories = `${baseURL}/categories/get-categories`;
 export const urlCreateCategory = `${baseURL}/categories/insert-category`;

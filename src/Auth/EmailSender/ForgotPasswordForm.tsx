@@ -2,7 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
@@ -11,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { loginCredencials } from "../auth.models";
+import { forgotPasswordRequest } from "../auth.models";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import TextFieldComponent from "../../Components/HelperComponents/TextFieldComponent";
@@ -37,7 +36,7 @@ function Copyright(props: any) {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignInSide(props: loginFormProps) {
+export default function ForgotPasswordForm(props: sendResetEmail) {
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -81,26 +80,16 @@ export default function SignInSide(props: loginFormProps) {
                 initialValues={props.model}
                 onSubmit={props.onSubmit}
                 validationSchema={Yup.object({
-                  username: Yup.string().required("This field is required!"),
-                  password: Yup.string().required("This field is required!"),
+                  email: Yup.string().email("Invalid email address").required("This field is required!"),
                 })}
               >
                 {(formikProps) => (
                   <Form>
                     <TextFieldComponent
-                      field="username"
-                      displayField="Username"
+                      field="email"
+                      displayField="Email"
                     />
-                    <TextFieldComponent
-                      field="password"
-                      displayField="Password"
-                      type="password"
-                    />
-
-                    <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Remember me"
-                    />
+                  
                     <Button
                       type="submit"
                       fullWidth
@@ -108,20 +97,8 @@ export default function SignInSide(props: loginFormProps) {
                       disabled={formikProps.isSubmitting}
                       sx={{ mt: 3, mb: 2 }}
                     >
-                      Sign In
+                      Send Email
                     </Button>
-                    <Grid container>
-                      <Grid item xs>
-                        <Link to={"/sendEmail"} >
-                          Forgot password?
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link to={'../register'} >
-                          {"Don't have an account? Sign Up"}
-                        </Link>
-                      </Grid>
-                    </Grid>
                   </Form>
                 )}
               </Formik>
@@ -132,10 +109,10 @@ export default function SignInSide(props: loginFormProps) {
   );
 }
 
-interface loginFormProps {
-  model: loginCredencials;
+interface sendResetEmail {
+  model: forgotPasswordRequest;
   onSubmit(
-    values: loginCredencials,
-    actions: FormikHelpers<loginCredencials>
+    values: forgotPasswordRequest,
+    actions: FormikHelpers<forgotPasswordRequest>
   ): void;
 }

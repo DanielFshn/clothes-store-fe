@@ -48,12 +48,7 @@ export default function ProductHeroLayout(
           alignItems: "center",
         }}
       >
-        <img
-          src="/static/themes/onepirate/productHeroWonder.png"
-          alt="wonder"
-          width="147"
-          height="80"
-        />
+        
         {children}
         <Box
           sx={{
