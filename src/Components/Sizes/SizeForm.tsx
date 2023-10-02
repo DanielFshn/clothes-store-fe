@@ -3,6 +3,7 @@ import { Box, Button, Grid, Paper } from "@mui/material";
 import * as Yup from "yup";
 import TextFieldComponent from "../HelperComponents/TextFieldComponent";
 import { sizeCreationDTO } from "./size.model";
+import { Link } from "react-router-dom";
 
 export default function CategoryForm(props: sizeFormProps) {
   return (
@@ -41,9 +42,11 @@ export default function CategoryForm(props: sizeFormProps) {
                         </Button>
                       </Grid>
                       <Grid item xs={4}>
-                        <Button variant="contained" href="/categories">
+                        <Link to={'/sizes'}>
+                        <Button variant="contained">
                           Cancel
                         </Button>
+                        </Link>
                       </Grid>
                     </Grid>
                   </Form>

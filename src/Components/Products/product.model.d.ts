@@ -1,14 +1,33 @@
+// export interface productCreationDTO {
+//   name: string;
+//   description: string;
+//   price: number;
+//   quantity: number;
+//   imageUrl: string;
+//   category: CategoryOption; // CategoryOption represents the selected category
+//   gender: GenderOption; // GenderOption represents the selected gende
+//   size: SizeOption; // SizeOption represents the selected size
+// }
 export interface productCreationDTO {
+    name: string;
+    description: string;
+    price: number;
+    quantity: number;
+    imageUrl: string;
+    categoryId: string; // CategoryOption represents the selected category
+    sizeId: string; // GenderOption represents the selected gende
+    genderId: string; // SizeOption represents the selected size
+  }
+export interface productToInsert{
   name: string;
   description: string;
   price: number;
   quantity: number;
   imageUrl: string;
-  category: CategoryOption; // CategoryOption represents the selected category
-  gender: GenderOption; // GenderOption represents the selected gende
-  size: SizeOption; // SizeOption represents the selected size
+  category: string; // CategoryOption represents the selected category
+  gender: string; // GenderOption represents the selected gende
+  size: string; // SizeOption represents the selected size
 }
-
 
 export interface SizeOption {
   id: string;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Snackbar, TablePagination } from "@mui/material";
+import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Snackbar, TablePagination, Typography } from "@mui/material";
 import axios, { AxiosResponse } from "axios";
 import { urlDeleteSize, urlSizes } from "../../Config/endpoinst";
 import { useNavigate } from "react-router-dom";
@@ -66,15 +66,23 @@ export default function IndexSizes() {
       console.error("Error fetching categories:", error);
     }
   };
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false); 
+    }, 1000); 
+  }, []);
 
   return (
     <div>
      {loading ? ( // Render the LoadingSpinner when loading is true
-    <LoadingSpinner /> )  : (null)};
+    <LoadingSpinner /> )  : (null)}
       <br/>
       <br/>
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={10} md={8}>
+        <Typography variant="h4" align="center" gutterBottom>
+            Sizes
+          </Typography>
           <Paper sx={{ width: "100%", overflow: "auto", marginTop: 2 }}>
             <TableContainer sx={{ maxHeight: 440 }}>
               <Table stickyHeader aria-label="sticky table">

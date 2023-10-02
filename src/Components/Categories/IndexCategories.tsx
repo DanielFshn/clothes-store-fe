@@ -98,6 +98,7 @@ export default function IndexCategories() {
       ;
       <br />
       <br />
+      <p>Categortie</p>
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={10} md={8}>
           <Paper sx={{ width: "100%", overflow: "auto", marginTop: 2 }}>

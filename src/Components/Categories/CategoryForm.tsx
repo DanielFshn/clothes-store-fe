@@ -3,6 +3,7 @@ import { Box, Button, Container, Grid, Paper } from "@mui/material";
 import * as Yup from "yup";
 import TextFieldComponent from "../HelperComponents/TextFieldComponent";
 import { categoryCreationDTO } from "./category.model";
+import { Link } from "react-router-dom";
 
 export default function CategoryForm(props: categoryFormProps) {
   return (
@@ -38,9 +39,11 @@ export default function CategoryForm(props: categoryFormProps) {
                     </Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button variant="contained" href="/categories">
+                  <Link to={'/categories'}>
+                    <Button variant="contained">
                       Cancel
                     </Button>
+                    </Link>
                   </Grid>
                 </Grid>
               </Form>

@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Snackbar, TablePagination } from "@mui/material";
+import { Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Snackbar, TablePagination, Typography } from "@mui/material";
 import axios, { AxiosResponse } from "axios";
 import {  urlDeleteGender, urlGetGenders } from "../../Config/endpoinst";
 import { useNavigate } from "react-router-dom";
@@ -77,11 +77,14 @@ export default function IndexGenders() {
   return (
     <div>
        {loading ? ( // Render the LoadingSpinner when loading is true
-    <LoadingSpinner /> )  : (null)};
+    <LoadingSpinner /> )  : (null)}
       <br/>
       <br/>
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={10} md={8}>
+        <Typography variant="h4" align="center" gutterBottom>
+            Genders
+          </Typography>
           <Paper sx={{ width: "100%", overflow: "auto", marginTop: 2 }}>
             <TableContainer sx={{ maxHeight: 440 }}>
               <Table stickyHeader aria-label="sticky table">

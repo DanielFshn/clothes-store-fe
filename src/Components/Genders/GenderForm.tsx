@@ -3,6 +3,7 @@ import { Box, Button, Grid, Paper } from "@mui/material";
 import * as Yup from "yup";
 import TextFieldComponent from "../HelperComponents/TextFieldComponent";
 import { genderCreationDTO } from "./gender.model";
+import { Link } from "react-router-dom";
 
 export default function GenderForm(props: categoryFormProps) {
   return (
@@ -38,9 +39,11 @@ export default function GenderForm(props: categoryFormProps) {
                     </Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button variant="contained" href="/categories">
+                    <Link to={'/genders'}>
+                    <Button variant="contained" >
                       Cancel
                     </Button>
+                    </Link>
                   </Grid>
                 </Grid>
               </Form>
