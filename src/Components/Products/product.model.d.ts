@@ -17,7 +17,23 @@ export interface productCreationDTO {
     categoryId: string; // CategoryOption represents the selected category
     sizeId: string; // GenderOption represents the selected gende
     genderId: string; // SizeOption represents the selected size
+    image? :File ;
   }
+
+  export interface editProductDTO{
+    name: string;
+    description: string;
+    price: number;
+    quantity: number;
+    imageUrl: string;
+    categoryId: string; // CategoryOption represents the selected category
+    sizeId: string; // GenderOption represents the selected gende
+    genderId: string; // SizeOption represents the selected size
+    image? :File ;
+  }
+
+
+
 export interface productToInsert{
   name: string;
   description: string;

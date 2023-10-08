@@ -33,6 +33,7 @@ export default function IndexProducts() {
   const [genreOptions, setGenreOptions] = useState<GenderOption[]>([]);
   const [sizeOptions, setSizeOptions] = useState<SizeOption[]>([]);
   const [dataTimestamp, setDataTimestamp] = useState(Date.now());
+
   const updateDataTimestamp = () => {
     setDataTimestamp(Date.now());
   };

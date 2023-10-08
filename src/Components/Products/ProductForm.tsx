@@ -54,12 +54,27 @@ export default function ProductForm(props: productFormProps) {
           >
             {(formikProps) => (
               <Form>
-                <TextFieldComponent field="name" displayField="Category Name" />
+                <TextFieldComponent field="name" displayField="Product Name" />
                 <TextFieldComponent field="description" displayField="Description" />
                 <TextFieldComponent field="price" displayField="Price" />
                 <TextFieldComponent field="quantity" displayField="Quantity" />
-                <TextFieldComponent field="imageUrl" displayField="Image" />
+                {/* <TextFieldComponent field="imageUrl" displayField="Image" /> */}
                 <div style={{ width: "30%" }}>
+                      <Typography variant="subtitle1" gutterBottom>
+                        Image
+                      </Typography>
+                      <input
+                        type="file"
+                        name="imageUrl"
+                        onChange={(e) => {
+                          // Handle file selection and set the value in Formik
+                          formikProps.setFieldValue("imageUrl", e.currentTarget.files?.[0].name);
+                          formikProps.setFieldValue("image",e.currentTarget.files?.[0]);
+                        }}
+                      />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+  <div style={{ width: "30%", marginRight: "16px" }}>
               {/* Category Dropdown */}
               <Typography variant="subtitle1" gutterBottom>
                     Category
@@ -67,6 +82,7 @@ export default function ProductForm(props: productFormProps) {
               <Select
                 label="Category"
                 name="categoryId"
+                style={{ width: "100%" }} // Set the width of the dropdown
                 onChange={(e) => {
                   const selectedOption = props.categories.find((option) => option.id === e.target.value);
                   //setSelectedCategory(selectedOption);
@@ -87,6 +103,7 @@ export default function ProductForm(props: productFormProps) {
                   </Typography>
               <Select
                 label="Gender"
+                style={{ width: "100%" }} // Set the width of the dropdown
                 name="genderId"
                 onChange={(e) => {
                   const selectedOption = props.genders.find((option) => option.id === e.target.value);
@@ -101,7 +118,6 @@ export default function ProductForm(props: productFormProps) {
                 ))}
               </Select>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ width: "30%", marginRight: "16px" }}>
                             {/* Size Dropdown */}
                             <Typography variant="subtitle1" gutterBottom>
@@ -110,6 +126,7 @@ export default function ProductForm(props: productFormProps) {
               <Select
                 label="Size"
                 name="sizeId"
+                style={{ width: "100%" }} // Set the width of the dropdown
                 onChange={(e) => {
                   const selectedOption = props.sizes.find((option) => option.id === e.target.value);
                   formikProps.setFieldValue("sizeId", selectedOption ? selectedOption.id : "");

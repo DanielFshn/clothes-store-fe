@@ -22,7 +22,7 @@ export default function IndexPage() {
       Do te shfaqen produktet me ante te kartave */}
       <ProductHero />
       <ProductCategories />
-      <ProductCTA />
+      {/* <ProductCTA /> */}
       <ProductSmokingHero />
     </div>
   );

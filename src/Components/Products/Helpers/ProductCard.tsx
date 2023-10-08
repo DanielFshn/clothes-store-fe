@@ -17,10 +17,10 @@ import {
   urlUpdateProductRating,
 } from "../../../Config/endpoinst";
 import Authorize from "../../../Auth/Authorize";
+import testImage from '../ProductImages/test.png';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-
 export default function ProductCard(props: ProductCardProps) {
-  const [claims, setClaims] = useState<claim[]>([]);
+    const [claims, setClaims] = useState<claim[]>([]);
   const [error, setError] = useState<string[]>([]);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false); // State for Snackbar
@@ -46,7 +46,10 @@ export default function ProductCard(props: ProductCardProps) {
   };
   const handleDelete = (productId: string) => {};
 
-  const handleEdit = (productId: string) => {};
+  const handleEdit = (productId: string) => {
+   navigate(`/product/edit/${productId}`);
+
+  };
 
   const [userRating, setUserRating] = useState(0);
   const handleRatingChange = async (event: any, newValue: any) => {
@@ -118,18 +121,20 @@ export default function ProductCard(props: ProductCardProps) {
 
   return (
     <div style={{ margin: "10px", flex: "0 0 calc(25% - 20px)" }}>
-      {error.length > 0 && ( // Conditional rendering of error message MUND TE KOMENTOHET DHE TE PERDORET VETEM SNACKABR
+      {/* {error.length > 0 && ( // Conditional rendering of error message MUND TE KOMENTOHET DHE TE PERDORET VETEM SNACKABR
         <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
           {error}
         </Alert>
-      )}
+      )} */}
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           component="img"
-          height="220"
-          image={props.product.imageUrl}
+          height="330"
+          image= {`${process.env.PUBLIC_URL}/ProductImages/${props.product.imageUrl}`}
           alt="image"
+          onError={(e : any) => console.error("Image failed to load:", e.message)}
+          onLoad={() => console.log("Image loaded successfully")}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

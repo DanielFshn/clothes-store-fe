@@ -21,6 +21,7 @@ import {
   Grid,
   Snackbar,
   TablePagination,
+  Typography,
 } from "@mui/material";
 import axios, { AxiosResponse } from "axios";
 import { urlDeleteCategory, urlGetCategories } from "../../Config/endpoinst";
@@ -95,12 +96,14 @@ export default function IndexCategories() {
       {loading ? ( // Render the LoadingSpinner when loading is true
         <LoadingSpinner />
       ) : null}
-      ;
+      
       <br />
       <br />
-      <p>Categortie</p>
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={10} md={8}>
+        <Typography variant="h4" align="center" gutterBottom>
+            Categories
+          </Typography>
           <Paper sx={{ width: "100%", overflow: "auto", marginTop: 2 }}>
             <TableContainer sx={{ maxHeight: 440 }}>
               <Table stickyHeader aria-label="sticky table">

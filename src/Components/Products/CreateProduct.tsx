@@ -11,6 +11,7 @@ import {
   urlCreateProduct,
   urlGetCategories,
   urlGetGenders,
+  urlSaveImage,
   urlSizes,
 } from "../../Config/endpoinst"; // Update the API endpoint
 import { AlertTitle } from "@mui/material";
@@ -49,6 +50,11 @@ export default function CreateProduct() {
     fetchData();
   }, []);
 
+  // const uploadFile = async(fileName: any, file: any) =>{
+  //   const formData = new FormData();
+  //   formData.append("")
+  // }
+
   async function create(product: productCreationDTO) {
     try {
       // if (
@@ -67,16 +73,24 @@ export default function CreateProduct() {
       //     gender: product.gender ? product.gender.name : "",
       //     size: product.size ? product.size.name : "",
       //   }));
+      if (product.image) {
+        const formData = new FormData();
+        formData.append("formFile", product.image);
+        formData.append("fileName", product.imageUrl);
+        await axios.post(urlSaveImage, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      }
+   
 
-        var result = await axios.post(urlCreateProduct, product); // Use the updated API endpoint for product creation
-        if (result.data && result.data.Message) {
-          setSuccessMessage(result.data.Message);
-        } else {
-          setSuccessMessage("Product created successfully!");
-        }
-        setError(null);
-        navigate("/products");
-      
+      var result = await axios.post(urlCreateProduct, product); // Use the updated API endpoint for product creation
+      if (result.data && result.data.Message) {
+        setSuccessMessage(result.data.Message);
+      } else {
+        setSuccessMessage("Product created successfully!");
+      }
+      setError(null);
+      navigate("/products");
     } catch (error: any) {
       if (error.response) {
         const errorResponse = error.response.data;
@@ -106,8 +120,7 @@ export default function CreateProduct() {
           price: 0,
           quantity: 0,
           imageUrl: "",
-          categoryId:
-           "",
+          categoryId: "",
           sizeId: "",
           genderId: "",
         }}

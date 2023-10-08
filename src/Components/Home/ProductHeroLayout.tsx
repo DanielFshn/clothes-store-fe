@@ -36,7 +36,12 @@ export default function ProductHeroLayout(
   props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps
 ) {
   const { sxBackground, children } = props;
-
+  const handleScrollDown = () => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  };
   return (
     <ProductHeroLayoutRoot>
       <Container
@@ -64,7 +69,7 @@ export default function ProductHeroLayout(
         />
         <Background sx={sxBackground} />
         <div style={{ animation: 'pulse 1s infinite' }}>
-          <Button startIcon={<ArrowDownwardIcon  style={{ fontSize: '3rem' }} />  }/>
+          <Button startIcon={<ArrowDownwardIcon  style={{ fontSize: '3rem' }} onClick={handleScrollDown}/>  }/>
           <style>
         {`
           @keyframes pulse {

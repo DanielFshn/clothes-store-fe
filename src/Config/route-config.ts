@@ -25,6 +25,7 @@ const routes = [
   { path: "/product/edit/:id", component: EditProduct },
   { path: "/product/create", component: CreateProduct },
   { path: "/product/details", component: ProductDetails },
+  { path: "/product/edit", component: EditProduct },
 
   //categories
   { path: "/categories", component: IndexCategories , isAdmin: true},

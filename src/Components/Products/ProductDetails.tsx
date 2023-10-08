@@ -47,7 +47,7 @@ export default function ProductDetails() {
         <CardMedia
           component="img"
           height="auto" // Allow the height to adjust based on the image aspect ratio
-          image={productDetails?.imageUrl}
+          image={`${process.env.PUBLIC_URL}/ProductImages/${productDetails?.imageUrl}`}
           alt={productDetails?.name}
           style={{ marginBottom: "10px" }}
         />

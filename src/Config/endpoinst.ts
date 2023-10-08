@@ -33,7 +33,10 @@ export const urlProducts = `${baseURL}/Product/get-all-products`;
 export const urlCreateProduct = `${baseURL}/Product/create-product`;
 export const urlEditProduct = `${baseURL}/Product/update-product`;
 export const urlDeleteProduct = `${baseURL}/Product/delete-product`;
-
+export const urlGetProductById = `${baseURL}/Product/get-by-id`;
 //product ratings
 export const urlCreateProductRating = `${baseURL}/product-ratings/create-rating-product`;
 export const urlUpdateProductRating = `${baseURL}/product-ratings/product-rating-edit`;
+
+//files
+export const urlSaveImage = `${baseURL}/File`;
