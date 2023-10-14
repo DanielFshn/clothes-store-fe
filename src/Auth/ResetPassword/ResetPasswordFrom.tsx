@@ -112,7 +112,7 @@ export default function ResetPasswordFrom(props: resetPasswordFormProps) {
                       disabled={formikProps.isSubmitting}
                       sx={{ mt: 3, mb: 2 }}
                     >
-                      Sign In
+                      Change
                     </Button>
                   </Form>
                 )}

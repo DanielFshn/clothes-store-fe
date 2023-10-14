@@ -19,6 +19,8 @@ import {
 import Authorize from "../../../Auth/Authorize";
 import testImage from '../ProductImages/test.png';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useAppDispatch } from "../../../store/store";
+import { addProductToCart } from "../../../store/features/productSlice";
 export default function ProductCard(props: ProductCardProps) {
     const [claims, setClaims] = useState<claim[]>([]);
   const [error, setError] = useState<string[]>([]);
@@ -119,6 +121,30 @@ export default function ProductCard(props: ProductCardProps) {
     setClaims(getClaims());
   }, []);
 
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = async () => {
+    try{
+    dispatch(
+      addProductToCart({
+        id: props.product.id,
+        name: props.product.name,
+        description: props.product.description,
+        price: props.product.price,
+        imageUrl: props.product.imageUrl,
+        categoryName: props.product.categoryName,
+        genderName: props.product.genderName,
+        sizeName: props.product.sizeName,
+      })
+    );
+    console.log("is click add to card");
+    setSuccessMessage("Product is added to cart!")
+    setSnackbarOpen(true);
+  }catch(error: any){
+      setError(error);
+  }
+  };
+
   return (
     <div style={{ margin: "10px", flex: "0 0 calc(25% - 20px)" }}>
       {/* {error.length > 0 && ( // Conditional rendering of error message MUND TE KOMENTOHET DHE TE PERDORET VETEM SNACKABR
@@ -154,7 +180,7 @@ export default function ProductCard(props: ProductCardProps) {
           />
         </CardContent>
         <CardActions>
-          <Button size="small">Add To Card</Button>
+          <Button size="small" onClick={handleAddToCart} >Add To Card</Button>
           <Link to={`/product/details?id=${props.product.id}`}>
             <Button size="small">Details</Button>
           </Link>

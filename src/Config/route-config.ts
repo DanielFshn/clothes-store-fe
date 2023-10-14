@@ -19,6 +19,7 @@ import ProductDetails from "../Components/Products/ProductDetails";
 import ResetPassowrd from "../Auth/ResetPassword/ResetPassword";
 import ForgotPassowrd from "../Auth/EmailSender/ForgotPassword";
 import ResetPasswordWithToken from "../Auth/ConfirmResetPassword/ResetPasswordWithToken";
+import ListCart from "../Components/Cart/ListCart";
 const routes = [
   //products
   { path: "/products", component: IndexProducts },
@@ -26,6 +27,9 @@ const routes = [
   { path: "/product/create", component: CreateProduct },
   { path: "/product/details", component: ProductDetails },
   { path: "/product/edit", component: EditProduct },
+
+  //cart
+  { path: "/cart", component: ListCart },
 
   //categories
   { path: "/categories", component: IndexCategories , isAdmin: true},

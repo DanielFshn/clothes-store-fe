@@ -10,13 +10,16 @@ import {
   ListItem,
   ListItemText,
   Button,
+  Icon,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate } from "react-router-dom";
 import Authorize from "../../Auth/Authorize";
 import { logout } from "../../Auth/handleJWT";
 import AuthenticationContext from "../../Auth/AuthenticationContext";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -63,7 +66,14 @@ const Navbar: React.FC = () => {
     </div>
   );
   const [loading, setLoading] = useState(true); // State to track loading
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
+  // Function to add a product to the cart
+  const addToCart = () => {
+    // Perform the logic to add a product to the cart
+    // For simplicity, increment the count by 1
+    setCartItemsCount(cartItemsCount + 1);
+  };
   return (
     <AppBar position="sticky">
       <Toolbar>
@@ -98,24 +108,45 @@ const Navbar: React.FC = () => {
           }
           authorized={
             <>
-              <span>Hello {getUsername()} &nbsp;&nbsp;&nbsp;</span>
-              <Link to={"/"}>
+              {/* <Link to={"/cart"}>
+              <Icon title="Cart">
+                <ShoppingBagIcon />
+              </Icon>
+              </Link> */}
+              <Link to={"/cart"} title="Cart">
                 <Button
                   LinkComponent={Link}
-                  startIcon={<LogoutIcon />}
+                  startIcon={<ShoppingBagIcon />}
+                  variant="contained"
+                >
+                  Cart
+                </Button>
+              </Link>
+              &nbsp;&nbsp;&nbsp;
+              {/* <span>Hello {getUsername()} &nbsp;&nbsp;&nbsp;</span> */}
+              <Link to={"/"} title="Log Out">
+                <Button
+                  LinkComponent={Link}
+                  startIcon={<LogoutIcon/>}
                   variant="contained"
                   onClick={() => {
                     logout();
                     update([]);
                   }}
                 >
-                  Log Out 
+                  Log Out
                 </Button>
-              </Link>&nbsp;&nbsp;&nbsp;
-                <Button variant="contained" LinkComponent={Link} onClick={() => {
-                        navigate("/changePassword");
-                }}>Change Password
-                </Button>
+              </Link>
+              &nbsp;&nbsp;&nbsp;
+              <Button title="Change Password"
+                variant="contained"
+                LinkComponent={Link}
+                onClick={() => {
+                  navigate("/changePassword");
+                }}
+              >
+                Change Password
+              </Button>
             </>
           }
         ></Authorize>
