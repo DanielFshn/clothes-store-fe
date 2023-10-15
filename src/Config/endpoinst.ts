@@ -40,3 +40,6 @@ export const urlUpdateProductRating = `${baseURL}/product-ratings/product-rating
 
 //files
 export const urlSaveImage = `${baseURL}/File`;
+
+//stripe
+export const urlPayment = `${baseURL}/Stripe/create-payment-intent`;

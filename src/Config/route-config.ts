@@ -20,6 +20,9 @@ import ResetPassowrd from "../Auth/ResetPassword/ResetPassword";
 import ForgotPassowrd from "../Auth/EmailSender/ForgotPassword";
 import ResetPasswordWithToken from "../Auth/ConfirmResetPassword/ResetPasswordWithToken";
 import ListCart from "../Components/Cart/ListCart";
+import Thankyou from "../Components/Payment/Thankyou";
+import CheckoutCard from "../Components/Payment/CheckoutCard";
+import PaymentForm from "../Components/Payment/PaymentForm";
 const routes = [
   //products
   { path: "/products", component: IndexProducts },
@@ -63,6 +66,10 @@ const routes = [
 
   //send email for forgot password
   {path: "/sendEmail", component: ForgotPassowrd},
+
+  //stripe payment
+  {path: "/thankyou", component: Thankyou},
+  {path: "/checkout" ,component: PaymentForm},
 
   //index
   { path: "/", component: IndexPage, exact: true },

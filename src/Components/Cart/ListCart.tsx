@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/store";
 import {
   List,
@@ -18,8 +18,12 @@ import { removeProductFromCart, updateProductQuantity } from "../../store/featur
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom";
+import StripeContainer from "../Payment/StripeContainer";
+
+
 
 export default function ListCart() {
+	const [showItem, setShowItem] = useState(false);
   const productInCart = useAppSelector((state) => state.product.productsCart);
   const dispatch = useAppDispatch();
 
@@ -43,6 +47,9 @@ export default function ListCart() {
   const isCartEmpty = productInCart.length === 0;
 
   return (
+    <>
+    {showItem ? (<StripeContainer />) : (
+    
     <Paper
       elevation={3}
       style={{
@@ -53,6 +60,8 @@ export default function ListCart() {
         alignItems: "center",
       }}
     >
+                {/* <CheckoutCard secret={secret} /> */}
+
       <Typography variant="h6" gutterBottom>
         Products in Cart
       </Typography>
@@ -99,16 +108,15 @@ export default function ListCart() {
             </ListItem>
             {index < productInCart.length - 1 && <Divider />}
           </React.Fragment>
+          
         ))}
         {!isCartEmpty && (
           <ListItem disablePadding alignItems="center" style={{ width: '100%', padding: '16px' }}>
-            <Link to="/payment" style={{ width: '100%' }}>
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={() => setShowItem(true)}>
                 Checkout
               </Button>
-            </Link>
           </ListItem>
-        )}
+          )}
         {isCartEmpty && (
           <Typography variant="body2" color="textSecondary">
             Your cart is empty.
@@ -116,5 +124,7 @@ export default function ListCart() {
         )}
       </List>
     </Paper>
+    )}
+    </>
   );
 }
