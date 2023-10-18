@@ -21,8 +21,9 @@ import ForgotPassowrd from "../Auth/EmailSender/ForgotPassword";
 import ResetPasswordWithToken from "../Auth/ConfirmResetPassword/ResetPasswordWithToken";
 import ListCart from "../Components/Cart/ListCart";
 import Thankyou from "../Components/Payment/Thankyou";
-import CheckoutCard from "../Components/Payment/CheckoutCard";
 import PaymentForm from "../Components/Payment/PaymentForm";
+import IndexOrders from "../Components/Orders/IndexOrders";
+import OrderGraph from "../Components/Orders/OrderGraph";
 const routes = [
   //products
   { path: "/products", component: IndexProducts },
@@ -70,6 +71,10 @@ const routes = [
   //stripe payment
   {path: "/thankyou", component: Thankyou},
   {path: "/checkout" ,component: PaymentForm},
+
+  //orders
+  {path: "/orders" ,component: IndexOrders},
+  {path: "/statistics" ,component: OrderGraph},
 
   //index
   { path: "/", component: IndexPage, exact: true },

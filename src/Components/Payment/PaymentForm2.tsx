@@ -1,7 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
-import React, { useState } from "react";
-import { urlPayment } from "../../Config/endpoinst";
+import React, { useContext, useEffect, useState } from "react";
+import { urlCreateOrder, urlPayment } from "../../Config/endpoinst";
 import { StripeCardElementOptions } from "@stripe/stripe-js";
 import {
   Box,
@@ -13,9 +13,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ProductCart } from "../../store/features/productSlice";
 import { useNavigate } from "react-router-dom";
+import { addOrder, saveOrderAsync } from "../../store/features/orderSlice";
+import {clearCart } from "../../store/features/productSlice";
+import AuthenticationContext from "../../Auth/AuthenticationContext";
 
 interface PaymentForm2Props {
   // Add any additional props here
@@ -23,7 +26,7 @@ interface PaymentForm2Props {
 
 const PaymentForm2: React.FC<PaymentForm2Props> = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const productsCart = useSelector(
     (state: { product: { productsCart: ProductCart[] } }) =>
       state.product.productsCart
@@ -34,8 +37,11 @@ const PaymentForm2: React.FC<PaymentForm2Props> = () => {
     (total, product) => total + product.total,
     0
   );
+  const { claims } = useContext(AuthenticationContext);
+
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const stripe = useStripe();
   const elements = useElements();
   const handleSubmit = async (e: any) => {
@@ -45,35 +51,84 @@ const PaymentForm2: React.FC<PaymentForm2Props> = () => {
       return;
     }
 
+    if (!e || !e.currentTarget) {
+      console.error("Event or currentTarget is null:", e);
+      return;
+    }
     try {
       if (stripe != null) {
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-          type: "card",
-          card: elements?.getElement(CardElement)!,
-          billing_details: {
-            address: {
-              line1: e.currentTarget.address.value,
-              city: e.currentTarget.city.value,
-              state: e.currentTarget.state.value,
-              postal_code: e.currentTarget.postalCode.value,
-            },
-            email: e.currentTarget.email.value,
-            phone: e.currentTarget.phone.value,
-            name: e.currentTarget.fullName.value,
-          },
-        });
-        if (paymentMethod) {
-          const { id } = paymentMethod as { id: string };
-          const response = await axios.post(`${urlPayment}`, {
-            amount: totalAmount * 100,
-            id,
+        const userIdClaim = claims.find((claim) => claim.name === "nameid");
+        if (userIdClaim) {
+          const userId = userIdClaim.value;
+          // Now you have the userId, you can use it as needed
+          const addressValue = e.currentTarget.address?.value;
+          const cityValue = e.currentTarget.city?.value;
+          const stateValue = e.currentTarget.state?.value;
+          const postalCodeValue = e.currentTarget.postalCode?.value;
+          const emailValue = e.currentTarget.email?.value;
+          const phoneValue = e.currentTarget.phone?.value;
+          const fullNameValue = e.currentTarget.fullName?.value;
+          dispatch(
+            addOrder({
+              id: "",
+              userId: userId,
+              totalAmount: totalAmount * 100,
+              products: productsCart,
+            })
+          );
+          console.log(
+            "Dispatched action:",
+            addOrder({
+              id: "",
+              userId: userId,
+              totalAmount: totalAmount * 100,
+              products: productsCart,
+            })
+          );
+          const orderApiResponse = await axios.post(urlCreateOrder, {
+            userId: userId,
+            totalAmount: totalAmount * 100,
+            country: stateValue,
+            city: cityValue,
+            streetName: addressValue,
+            postalCode: postalCodeValue,
+            products: productsCart,
           });
-          if (response.data) {
-            console.log("Successful payment");
-            setSuccess(true);
-            var client_secret = response.data.client_secret;
-            console.log(client_secret);
-            navigate(`/thankyou?payment_intent_client_secret=${client_secret}`);
+          
+           console.log("API response:", orderApiResponse);
+          const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: "card",
+            card: elements?.getElement(CardElement)!,
+            billing_details: {
+              address: {
+                line1: addressValue,
+                city: cityValue,
+                state: stateValue,
+                postal_code: postalCodeValue,
+              },
+              email: emailValue,
+              phone: phoneValue,
+              name: fullNameValue,
+            },
+          });
+          if (paymentMethod) {
+            const { id } = paymentMethod as { id: string };
+            const response = await axios.post(`${urlPayment}`, {
+              amount: totalAmount * 100,
+              id,
+            });
+
+            if (response.data) {
+              console.log("Successful payment");
+              setSuccess(true);
+              // Dispatch the clearCart action
+              dispatch(clearCart())
+              var client_secret = response.data.client_secret;
+              console.log(client_secret);
+              navigate(
+                `/thankyou?payment_intent_client_secret=${client_secret}`
+              );
+            }
           }
         }
       }
@@ -81,6 +136,9 @@ const PaymentForm2: React.FC<PaymentForm2Props> = () => {
       console.log("Error", error);
     }
   };
+
+  
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -189,8 +247,7 @@ const PaymentForm2: React.FC<PaymentForm2Props> = () => {
         ) : (
           <div>
             <Typography component="h2" variant="h6">
-              You just bought a sweet spatula congrats! This is the best
-              decision of your life.
+              succes
             </Typography>
           </div>
         )}

@@ -43,3 +43,8 @@ export const urlSaveImage = `${baseURL}/File`;
 
 //stripe
 export const urlPayment = `${baseURL}/Stripe/create-payment-intent`;
+
+//orders
+export const urlCreateOrder = `${baseURL}/Order/add-order`;
+export const urlGetOrdersById = `${baseURL}/Order/orders`;
+export const urlGetStatistics = `${baseURL}/Order/statistics`;

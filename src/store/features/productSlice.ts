@@ -71,6 +71,9 @@ export const ProductSlice = createSlice({
         product.total = product.price * newQuantity;
       }
     },
+    clearCart: (state) =>{
+      state.productsCart = [];
+    }
   },
 });
 
@@ -80,3 +83,4 @@ export default ProductSlice.reducer;
 export const { addProductToCart } = ProductSlice.actions;
 export const { removeProductFromCart } = ProductSlice.actions;
 export const { updateProductQuantity } = ProductSlice.actions;
+export const {clearCart} = ProductSlice.actions;

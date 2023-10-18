@@ -58,6 +58,12 @@ const Navbar: React.FC = () => {
                 <ListItem button component={Link} to="/genders">
                   <ListItemText primary="Genders" />
                 </ListItem>
+                <ListItem button component={Link} to="/orders">
+                  <ListItemText primary="Orders" />
+                </ListItem>
+                <ListItem button component={Link} to="/statistics">
+                  <ListItemText primary="Orders2" />
+                </ListItem>
               </List>
             </>
           }
