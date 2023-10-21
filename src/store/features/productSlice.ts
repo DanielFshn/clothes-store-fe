@@ -38,6 +38,11 @@ export const ProductSlice = createSlice({
         sizeName: string;
       }>
     ) => {
+      const existingProduct = state.productsCart.find((product) => product.id === action.payload.id);
+      if(existingProduct){
+        existingProduct.quantity += 1;
+        existingProduct.total += action.payload.price;
+      }else{
       state.productsCart.push({
         id: action.payload.id,
         name: action.payload.name,
@@ -50,6 +55,7 @@ export const ProductSlice = createSlice({
         quantity: 1,
         total : action.payload.price
       });
+    }
     },
     removeProductFromCart: (
       state,

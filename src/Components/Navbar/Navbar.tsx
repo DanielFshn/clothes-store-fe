@@ -43,6 +43,19 @@ const Navbar: React.FC = () => {
         </ListItem>
 
         <Authorize
+          role="User"
+          authorized={
+            <>
+              <List>
+                <ListItem button component={Link} to="/orders">
+                  <ListItemText primary="Orders" />
+                </ListItem>
+              </List>
+            </>
+          }
+        />
+
+        <Authorize
           role="Admin"
           authorized={
             <>
@@ -58,11 +71,8 @@ const Navbar: React.FC = () => {
                 <ListItem button component={Link} to="/genders">
                   <ListItemText primary="Genders" />
                 </ListItem>
-                <ListItem button component={Link} to="/orders">
-                  <ListItemText primary="Orders" />
-                </ListItem>
                 <ListItem button component={Link} to="/statistics">
-                  <ListItemText primary="Orders2" />
+                  <ListItemText primary="Orders Statistics" />
                 </ListItem>
               </List>
             </>
@@ -133,7 +143,7 @@ const Navbar: React.FC = () => {
               <Link to={"/"} title="Log Out">
                 <Button
                   LinkComponent={Link}
-                  startIcon={<LogoutIcon/>}
+                  startIcon={<LogoutIcon />}
                   variant="contained"
                   onClick={() => {
                     logout();
@@ -144,7 +154,8 @@ const Navbar: React.FC = () => {
                 </Button>
               </Link>
               &nbsp;&nbsp;&nbsp;
-              <Button title="Change Password"
+              <Button
+                title="Change Password"
                 variant="contained"
                 LinkComponent={Link}
                 onClick={() => {

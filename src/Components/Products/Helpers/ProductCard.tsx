@@ -180,7 +180,9 @@ export default function ProductCard(props: ProductCardProps) {
           />
         </CardContent>
         <CardActions>
+          <Authorize role="User" authorized={
           <Button size="small" onClick={handleAddToCart} >Add To Card</Button>
+        }/>
           <Link to={`/product/details?id=${props.product.id}`}>
             <Button size="small">Details</Button>
           </Link>

@@ -24,6 +24,7 @@ import Thankyou from "../Components/Payment/Thankyou";
 import PaymentForm from "../Components/Payment/PaymentForm";
 import IndexOrders from "../Components/Orders/IndexOrders";
 import OrderGraph from "../Components/Orders/OrderGraph";
+import NotAuthorize from "../Components/Errors/NotAuthorize";
 const routes = [
   //products
   { path: "/products", component: IndexProducts },
@@ -64,6 +65,7 @@ const routes = [
 
   //errors
   { path: "/pageNotFound", component: Page404 },
+  { path: "/notauthorize", component: NotAuthorize },
 
   //send email for forgot password
   {path: "/sendEmail", component: ForgotPassowrd},
